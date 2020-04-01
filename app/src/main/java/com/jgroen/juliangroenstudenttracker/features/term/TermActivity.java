@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgroen.juliangroenstudenttracker.R;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseActivity;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseDetailsActivity;
 
 public class TermActivity extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class TermActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            Intent intent = new Intent(TermActivity.this, CourseActivity.class);
+            Intent intent = new Intent(TermActivity.this, TermAddEditActivity.class);
             startActivityForResult(intent, NEW_TERM_ACTIVITY_REQUEST_CODE);
         });
     }
