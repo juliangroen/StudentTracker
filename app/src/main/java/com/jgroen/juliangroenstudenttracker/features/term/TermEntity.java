@@ -19,6 +19,10 @@ public class TermEntity {
         this.termEndDate = termEndDate;
     }
 
+    public void setTermID(int termID) {
+        this.termID = termID;
+    }
+
     public int getTermID() {
         return termID;
     }

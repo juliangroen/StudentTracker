@@ -16,4 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_padding"/>
 
+    <include layout="@layout/content_term" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

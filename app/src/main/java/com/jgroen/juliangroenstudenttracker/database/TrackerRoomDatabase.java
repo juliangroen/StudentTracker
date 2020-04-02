@@ -34,6 +34,7 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TrackerRoomDatabase.class, "tracker_database")
+                            .addCallback(roomCallback)
                             .build();
                 }
             }
@@ -61,11 +62,18 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
             termDao.deleteAllTerms();
 
-            TermEntity term = new TermEntity(
+            termDao.insert(new TermEntity(
                     "Term 1",
                     new GregorianCalendar(2020, Calendar.MARCH, 1).getTime(),
-                    new GregorianCalendar(2020, Calendar.AUGUST, 31).getTime() );
-            termDao.insert(term);
+                    new GregorianCalendar(2020, Calendar.AUGUST, 31).getTime()));
+            termDao.insert(new TermEntity(
+                    "Term 2",
+                    new GregorianCalendar(2020, Calendar.SEPTEMBER, 1).getTime(),
+                    new GregorianCalendar(2021, Calendar.FEBRUARY, 28).getTime() ));
+            termDao.insert(new TermEntity(
+                    "Term 3",
+                    new GregorianCalendar(2021, Calendar.MARCH, 1).getTime(),
+                    new GregorianCalendar(2021, Calendar.AUGUST, 31).getTime() ));
             return null;
         }
     }
