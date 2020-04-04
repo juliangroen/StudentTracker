@@ -9,10 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".features.assessment.AssessmentAddEditActivity"></activity>
-        <activity android:name=".features.course.CourseAddEditActivity" />
-        <activity android:name=".features.term.TermAddEditActivity" />
-        <activity android:name=".features.term.TermDetailsActivity" />
+        <activity android:name=".features.assessment.AssessmentDetailsActivity"
+        android:label="@string/activity_assessment_detail_title"/>
+        <activity android:name=".features.assessment.AssessmentAddEditActivity"
+        android:label="@string/activity_assessment_add_title"/>
+        <activity android:name=".features.course.CourseDetailsActivity"
+        android:label="@string/activity_course_detail_title"/>
+        <activity android:name=".features.course.CourseAddEditActivity"
+        android:label="@string/activity_course_add_title"/>
+        <activity android:name=".features.term.TermDetailsActivity"
+        android:label="@string/activity_term_detail_title"/>
+        <activity android:name=".features.term.TermAddEditActivity"
+            android:label="@string/activity_term_add_title"/>
         <activity android:name=".features.term.TermActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".features.course.CourseDetailsActivity" />
-        <activity android:name=".features.assessment.AssessmentDetailsActivity" />
     </application>
 
 </manifest>

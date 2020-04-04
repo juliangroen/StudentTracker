@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Student Tracker</string>
+    <string name="activity_assessment_detail_title">Assessment Details</string>
+    <string name="activity_assessment_add_title">Add Assessment</string>
+    <string name="activity_assessment_edit_title">Edit Assessment</string>
+    <string name="activity_course_detail_title">Course Details</string>
+    <string name="activity_course_add_title">Add Course</string>
+    <string name="activity_course_edit_title">Edit Course</string>
+    <string name="activity_term_detail_title">Term Details</string>
+    <string name="activity_term_add_title">Add Term</string>
+    <string name="activity_term_edit_title">Edit Term</string>
+    <string name="label_title">Title:</string>
+    <string name="hint_enter_tile">Enter title</string>
+    <string name="label_start_date">Start Date:</string>
+    <string name="label_end_date">End Date:</string>
 </resources>
