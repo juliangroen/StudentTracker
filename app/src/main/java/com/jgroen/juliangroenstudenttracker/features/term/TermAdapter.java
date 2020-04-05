@@ -1,6 +1,7 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgroen.juliangroenstudenttracker.R;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {
@@ -49,15 +52,30 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TermViewHolder holder, int position) {
+
         if (terms != null) {
+
             TermEntity current = terms.get(position);
+            Calendar cal = Calendar.getInstance();
+
+            cal.setTime(current.getTermStartDate());
+            String startDate = context.getResources().getString(R.string.term_list_item_start_date,
+                    new SimpleDateFormat("MMM dd yyyy").format(cal.getTime()));
+
+            cal.setTime(current.getTermEndDate());
+            String endDate = context.getResources().getString(R.string.term_list_item_end_date,
+                    new SimpleDateFormat("MMM dd yyyy").format(cal.getTime()));
+
             holder.termListTitle.setText(current.getTermTitle());
-            holder.termListStartDate.setText(current.getTermStartDate().toString());
-            holder.termListEndDate.setText(current.getTermEndDate().toString());
+            holder.termListStartDate.setText(startDate);
+            holder.termListEndDate.setText(endDate);
+
         } else {
+
             holder.termListTitle.setText("N/A");
             holder.termListStartDate.setText("N/A");
             holder.termListEndDate.setText("N/A");
+
         }
     }
 

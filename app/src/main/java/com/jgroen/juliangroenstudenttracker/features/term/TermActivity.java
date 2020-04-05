@@ -1,5 +1,6 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,9 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseDetailsActivity;
 
+import java.util.Date;
 import java.util.List;
 
 public class TermActivity extends AppCompatActivity {
@@ -43,5 +46,25 @@ public class TermActivity extends AppCompatActivity {
                 adapter.setTerms(termEntities);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            String title = data.getStringExtra(TermAddEditActivity.EXTRA_TERM_TITLE);
+            Date startDate = new Date();
+            Date endDate = new Date();
+
+            startDate.setTime(data.getLongExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, -1));
+            endDate.setTime(data.getLongExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, -1));
+
+            TermEntity term = new TermEntity(title, startDate, endDate);
+            termViewModel.insert(term);
+
+            Snackbar.make(findViewById(R.id.activityTerm), "Term Saved!", Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

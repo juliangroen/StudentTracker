@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/small_padding"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/small_padding">
 
     <TextView
         android:id="@+id/termListTitle"
         style="@android:style/TextAppearance.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_dark_background"
-        android:text="Term 1"/>
+        android:background="@color/cardview_dark_background"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,19 +22,17 @@
 
         <TextView
             android:id="@+id/termListStartDate"
-            style="@android:style/TextAppearance.Small"
+            style="@android:style/TextAppearance.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="Start: 01/01/2020"/>
+            android:layout_weight="0.5"/>
 
         <TextView
             android:id="@+id/termListEndDate"
-            style="@android:style/TextAppearance.Small"
+            style="@android:style/TextAppearance.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="End: 06/30/2020"/>
+            android:layout_weight="0.5"/>
 
     </LinearLayout>
 
