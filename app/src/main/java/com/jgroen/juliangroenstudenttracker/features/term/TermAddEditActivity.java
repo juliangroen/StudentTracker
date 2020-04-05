@@ -1,9 +1,11 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -11,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -25,6 +28,8 @@ public class TermAddEditActivity extends AppCompatActivity {
     private DatePicker dateStartDate;
     private DatePicker dateEndDate;
 
+    private TermViewModel termViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +39,26 @@ public class TermAddEditActivity extends AppCompatActivity {
         dateStartDate = findViewById(R.id.dateStartDate);
         dateEndDate = findViewById(R.id.dateEndDate);
 
+        termViewModel = new ViewModelProvider(this).get(TermViewModel.class);
+
         Intent intent = getIntent();
+
+        if (intent.hasExtra(EXTRA_TERM_ID)) {
+            setTitle(R.string.activity_term_edit_title);
+            textTermTitle.setText(intent.getStringExtra(EXTRA_TERM_TITLE));
+
+            Date startDate = new Date();
+            Date endDate = new Date();
+            Calendar cal = Calendar.getInstance();
+
+            startDate.setTime(Long.parseLong(intent.getStringExtra(EXTRA_TERM_START_DATE), 10));
+            cal.setTime(startDate);
+            dateStartDate.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+
+            endDate.setTime(Long.parseLong(intent.getStringExtra(EXTRA_TERM_END_DATE), 10));
+            cal.setTime(endDate);
+            dateEndDate.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab_term_save);
         fab.setOnClickListener(view -> {
@@ -62,11 +86,23 @@ public class TermAddEditActivity extends AppCompatActivity {
             return;
         }
 
-        Intent data = new Intent();
-        data.putExtra(EXTRA_TERM_TITLE, title);
-        data.putExtra(EXTRA_TERM_START_DATE, startDate.getTime());
-        data.putExtra(EXTRA_TERM_END_DATE, endDate.getTime());
-        setResult(RESULT_OK, data);
-        finish();
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(EXTRA_TERM_ID)) {
+
+            TermEntity term = new TermEntity(title, startDate, endDate);
+            term.setTermID(intent.getIntExtra(EXTRA_TERM_ID, -1));
+            termViewModel.update(term);
+            finish();
+
+        } else {
+
+            Intent data = new Intent();
+            data.putExtra(EXTRA_TERM_TITLE, title);
+            data.putExtra(EXTRA_TERM_START_DATE, startDate.getTime());
+            data.putExtra(EXTRA_TERM_END_DATE, endDate.getTime());
+            setResult(RESULT_OK, data);
+            finish();
+        }
     }
 }

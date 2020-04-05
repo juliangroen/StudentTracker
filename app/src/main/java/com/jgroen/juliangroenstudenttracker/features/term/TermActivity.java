@@ -1,26 +1,29 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseDetailsActivity;
 
 import java.util.Date;
 import java.util.List;
 
 public class TermActivity extends AppCompatActivity {
 
-    private static final int NEW_TERM_ACTIVITY_REQUEST_CODE = 1;
+    private static final int ADD_TERM_REQUEST_CODE = 1;
+    private static final int EDIT_TERM_REQUEST_CODE = 2;
     private TermViewModel termViewModel;
 
     @Override
@@ -32,7 +35,7 @@ public class TermActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(TermActivity.this, TermAddEditActivity.class);
-            startActivityForResult(intent, NEW_TERM_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(intent, ADD_TERM_REQUEST_CODE);
         });
 
         RecyclerView recyclerView = findViewById(R.id.termRecyclerView);
@@ -46,6 +49,21 @@ public class TermActivity extends AppCompatActivity {
                 adapter.setTerms(termEntities);
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            }
+        }).attachToRecyclerView(recyclerView);
+
     }
 
     @Override

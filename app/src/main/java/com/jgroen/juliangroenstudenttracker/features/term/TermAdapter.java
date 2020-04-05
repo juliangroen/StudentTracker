@@ -1,7 +1,9 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
 import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,16 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             termListStartDate = itemView.findViewById(R.id.termListStartDate);
             termListEndDate = itemView.findViewById(R.id.termListEndDate);
 
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                final TermEntity current = terms.get(position);
+                Intent intent = new Intent(context, TermAddEditActivity.class);
+                intent.putExtra(TermAddEditActivity.EXTRA_TERM_ID, current.getTermID());
+                intent.putExtra(TermAddEditActivity.EXTRA_TERM_TITLE, current.getTermTitle());
+                intent.putExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, Long.toString(current.getTermStartDate().getTime()));
+                intent.putExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, Long.toString(current.getTermEndDate().getTime()));
+                context.startActivity(intent);
+            });
         }
 
     }
