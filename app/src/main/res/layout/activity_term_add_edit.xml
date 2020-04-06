@@ -1,83 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
+    android:id="@+id/activityTermAddEdit"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:padding="@dimen/large_padding"
+    tools:context=".features.term.TermAddEditActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activityTermAddEdit"
+    <EditText
+        android:id="@+id/textTermTitle"
+        style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/large_padding"
-        tools:context=".features.term.TermAddEditActivity">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:hint="@string/hint_enter_tile"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingTop="@dimen/small_padding"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/textTermTitle"
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/small_padding"
-            android:maxLines="1"
-            android:inputType="text"
-            android:imeOptions="actionDone"
-            android:hint="@string/hint_enter_tile"
-            android:importantForAutofill="no"
-            android:gravity="center_horizontal"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/labelTermStartDate"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/large_padding"
+        android:text="@string/label_start_date"
+        app:layout_constraintTop_toBottomOf="@id/textTermTitle" />
 
-        <TextView
-            android:id="@+id/labelTermStartDate"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/large_padding"
-            android:text="@string/label_start_date"
-            android:gravity="center_horizontal"
-            app:layout_constraintTop_toBottomOf="@id/textTermTitle" />
+    <DatePicker
+        android:id="@+id/dateStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:paddingTop="@dimen/small_padding"
+        app:layout_constraintTop_toBottomOf="@id/labelTermStartDate" />
 
-        <DatePicker
-            android:id="@+id/dateStartDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/small_padding"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            app:layout_constraintTop_toBottomOf="@id/labelTermStartDate" />
+    <TextView
+        android:id="@+id/labelTermEndDate"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/small_padding"
+        android:text="@string/label_end_date"
+        app:layout_constraintTop_toBottomOf="@id/dateStartDate" />
 
-        <TextView
-            android:id="@+id/labelTermEndDate"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/small_padding"
-            android:text="@string/label_end_date"
-            android:gravity="center_horizontal"
-            app:layout_constraintTop_toBottomOf="@id/dateStartDate" />
+    <DatePicker
+        android:id="@+id/dateEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:paddingTop="@dimen/small_padding"
+        app:layout_constraintTop_toBottomOf="@id/labelTermEndDate" />
 
-        <DatePicker
-            android:id="@+id/dateEndDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/small_padding"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            app:layout_constraintTop_toBottomOf="@id/labelTermEndDate" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_term_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_padding"
+        android:src="@drawable/ic_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_term_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_save"
-            android:layout_margin="@dimen/large_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:maxImageSize="32dp"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
