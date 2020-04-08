@@ -88,16 +88,14 @@ public class TermAddEditActivity extends AppCompatActivity {
             TermEntity term = new TermEntity(title, startDate, endDate);
             term.setTermID(intent.getIntExtra(EXTRA_TERM_ID, -1));
             termViewModel.update(term);
-            finish();
 
-        } else {
-
-            Intent data = new Intent();
-            data.putExtra(EXTRA_TERM_TITLE, title);
-            data.putExtra(EXTRA_TERM_START_DATE, startDate.getTime());
-            data.putExtra(EXTRA_TERM_END_DATE, endDate.getTime());
-            setResult(RESULT_OK, data);
-            finish();
         }
+
+        Intent data = new Intent();
+        data.putExtra(EXTRA_TERM_TITLE, title);
+        data.putExtra(EXTRA_TERM_START_DATE, startDate.getTime());
+        data.putExtra(EXTRA_TERM_END_DATE, endDate.getTime());
+        setResult(RESULT_OK, data);
+        finish();
     }
 }

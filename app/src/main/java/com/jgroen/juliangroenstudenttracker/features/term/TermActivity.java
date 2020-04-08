@@ -22,8 +22,8 @@ import java.util.List;
 
 public class TermActivity extends AppCompatActivity {
 
-    private static final int ADD_TERM_REQUEST_CODE = 1;
-    private static final int EDIT_TERM_REQUEST_CODE = 2;
+    public static final int ADD_TERM_REQUEST_CODE = 1;
+    public static final int EDIT_TERM_REQUEST_CODE = 2;
     private TermViewModel termViewModel;
 
     @Override
