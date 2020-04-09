@@ -12,19 +12,17 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.jgroen.juliangroenstudenttracker.features.course.CourseDao;
 import com.jgroen.juliangroenstudenttracker.features.term.TermDao;
 import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
 import com.jgroen.juliangroenstudenttracker.utils.Converters;
-
-import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Database(entities = {TermEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class TrackerRoomDatabase extends RoomDatabase {
 
     public abstract TermDao termDao();
+    public abstract CourseDao courseDao();
 
     private static volatile TrackerRoomDatabase INSTANCE;
 
