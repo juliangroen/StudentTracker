@@ -50,11 +50,9 @@ public class TermDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.menu_item_edit_term) {
             Intent firstIntent = getIntent();
-            Intent intent = new Intent(this, TermAddEditActivity.class);
+            Intent intent = new Intent(TermDetailsActivity.this, TermAddEditActivity.class);
             intent.putExtras(firstIntent);
-            //firstIntent.setClassName("com.jgroen.juliangroenstudenttracker", "com.jgroen.juliangroenstudenttracker.features.term.TermAddEditActivity");
-            startActivityForResult(firstIntent, TermActivity.EDIT_TERM_REQUEST_CODE);
-            //startActivity(firstIntent);
+            startActivityForResult(intent, TermActivity.EDIT_TERM_REQUEST_CODE);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -65,7 +63,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             setData(data);
-            Snackbar.make(findViewById(R.id.activityTerm), "Term Updated!", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.activityTermDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
         }
     }
 
