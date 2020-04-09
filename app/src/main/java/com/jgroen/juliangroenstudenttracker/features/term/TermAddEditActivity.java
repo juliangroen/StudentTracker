@@ -61,6 +61,15 @@ public class TermAddEditActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        //return super.onSupportNavigateUp();
+        Intent intent = getIntent();
+        setResult(RESULT_CANCELED, intent);
+        finish();
+        return true;
+    }
+
     private void saveTerm() {
         String title = textTermTitle.getText().toString();
 

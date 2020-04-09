@@ -5,19 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/small_padding">
+    android:layout_marginTop="@dimen/small_padding"
+    >
 
     <TextView
         android:id="@+id/termListTitle"
         style="@android:style/TextAppearance.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/small_padding"
+        android:paddingEnd="@dimen/small_padding"
+        android:paddingTop="@dimen/small_padding"
         android:background="@color/cardview_dark_background"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/cardview_dark_background"
+        android:padding="@dimen/small_padding"
         android:orientation="horizontal">
 
         <TextView

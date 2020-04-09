@@ -37,6 +37,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             addCourse();
         });
+
     }
 
     @Override
@@ -53,8 +54,10 @@ public class TermDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(TermDetailsActivity.this, TermAddEditActivity.class);
             intent.putExtras(firstIntent);
             startActivityForResult(intent, TermActivity.EDIT_TERM_REQUEST_CODE);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
