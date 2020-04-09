@@ -3,10 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.term.TermDetailsActivity"
-    tools:showIn="@layout/activity_term_details"
-    >
+    android:layout_height="match_parent">
+   <!-- tools:context=".features.term.TermDetailsActivity"
+    tools:showIn="@layout/activity_term_details"-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/courseRecyclerView"

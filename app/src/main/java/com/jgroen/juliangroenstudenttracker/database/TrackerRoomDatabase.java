@@ -13,11 +13,12 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.jgroen.juliangroenstudenttracker.features.course.CourseDao;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.features.term.TermDao;
 import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
 import com.jgroen.juliangroenstudenttracker.utils.Converters;
 
-@Database(entities = {TermEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {TermEntity.class, CourseEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class TrackerRoomDatabase extends RoomDatabase {
 
@@ -50,11 +51,12 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
         private final TermDao termDao;
+        private final CourseDao courseDao;
 
         private PopulateDbAsync(TrackerRoomDatabase db) {
             termDao = db.termDao();
+            courseDao = db.courseDao();
         }
-
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -72,6 +74,25 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
                     "Term 3",
                     new GregorianCalendar(2021, Calendar.MARCH, 1).getTime(),
                     new GregorianCalendar(2021, Calendar.AUGUST, 31).getTime() ));
+
+            courseDao.deleteAllCourses();
+
+            courseDao.insert(new CourseEntity(
+                    "Course 1",
+                    new GregorianCalendar(2020, Calendar.MARCH, 1).getTime(),
+                    new GregorianCalendar(2020, Calendar.APRIL, 15).getTime(),
+                    "In Progress"));
+            courseDao.insert(new CourseEntity(
+                    "Course 2",
+                    new GregorianCalendar(2020, Calendar.APRIL, 15).getTime(),
+                    new GregorianCalendar(2020, Calendar.MAY, 30).getTime(),
+                    "In Progress"));
+            courseDao.insert(new CourseEntity(
+                    "Course 3",
+                    new GregorianCalendar(2020, Calendar.JUNE, 1).getTime(),
+                    new GregorianCalendar(2020, Calendar.JULY, 15).getTime(),
+                    "In Progress"));
+
             return null;
         }
     }

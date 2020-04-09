@@ -27,6 +27,14 @@
         app:layout_constraintTop_toBottomOf="@id/textTermDetailTitle"
         android:text="01/01/2020 to 06/30/2020"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/courseRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/textTermDetailDates"
+        tools:listitem="@layout/course_list_item"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCourseAdd"
         android:layout_width="wrap_content"
