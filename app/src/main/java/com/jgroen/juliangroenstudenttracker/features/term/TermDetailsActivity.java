@@ -19,10 +19,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseAdapter;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseAddEditActivity;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseDetailsActivity;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseViewModel;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
+import java.util.Date;
 import java.util.List;
 
 public class TermDetailsActivity extends AppCompatActivity {
@@ -73,7 +76,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.menu_item_edit) {
+        if (item.getItemId() == R.id.menu_item_edit) {
             Intent firstIntent = getIntent();
             Intent intent = new Intent(TermDetailsActivity.this, TermAddEditActivity.class);
             intent.putExtras(firstIntent);
@@ -89,8 +92,29 @@ public class TermDetailsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            setData(data);
-            Snackbar.make(findViewById(R.id.activityTermDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
+
+            if (requestCode == TermActivity.EDIT_TERM_REQUEST_CODE) {
+                setData(data);
+                Snackbar.make(findViewById(R.id.activityTermDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
+
+            } else if (requestCode == CourseDetailsActivity.ADD_COURSE_REQUEST_CODE) {
+                String title = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE);
+                String status = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS);
+                Date startDate = new Date();
+                Date endDate = new Date();
+
+                startDate.setTime(data.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, -1));
+                endDate.setTime(data.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, -1));
+
+                CourseEntity course = new CourseEntity(title, startDate, endDate, status);
+                courseViewModel.insert(course);
+
+                Snackbar.make(findViewById(R.id.activityTermDetails), "Course Saved!", Snackbar.LENGTH_SHORT).show();
+            }
+
+        } else {
+            setData(getIntent());
+
         }
     }
 
@@ -109,5 +133,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     }
 
     private void addCourse() {
+        Intent intent = new Intent(TermDetailsActivity.this, CourseAddEditActivity.class);
+        startActivityForResult(intent, CourseDetailsActivity.ADD_COURSE_REQUEST_CODE);
     }
 }

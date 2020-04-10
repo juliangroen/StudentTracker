@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:hint="@string/hint_enter_tile"
+        android:hint="@string/hint_enter_status"
         android:imeOptions="actionDone"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -54,7 +54,6 @@
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/labelCourseStartDate" />
 
     <TextView
@@ -63,7 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="@dimen/large_padding"
         android:text="@string/label_end_date"
         app:layout_constraintTop_toBottomOf="@id/dateCourseStartDate" />
 
@@ -73,7 +71,6 @@
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/labelCourseEndDate" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

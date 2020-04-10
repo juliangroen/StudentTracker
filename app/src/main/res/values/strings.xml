@@ -18,4 +18,5 @@
     <string name="term_list_item_end_date">End: %1$s</string>
 
     <string name="detail_dates">%1$s to %2$s</string>
+    <string name="hint_enter_status">Enter a status</string>
 </resources>

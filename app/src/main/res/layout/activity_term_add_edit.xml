@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/labelTermStartDate" />
 
     <TextView
@@ -49,7 +48,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/label_end_date"
-        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/dateStartDate" />
 
     <DatePicker
@@ -58,7 +56,6 @@
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/labelTermEndDate" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
