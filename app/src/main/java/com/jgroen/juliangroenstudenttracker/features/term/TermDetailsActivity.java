@@ -67,13 +67,13 @@ public class TermDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_term_details, menu);
+        menuInflater.inflate(R.menu.menu_details, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.menu_item_edit_term) {
+        if(item.getItemId() == R.id.menu_item_edit) {
             Intent firstIntent = getIntent();
             Intent intent = new Intent(TermDetailsActivity.this, TermAddEditActivity.class);
             intent.putExtras(firstIntent);
@@ -105,7 +105,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         String endDate = TrackerUtilities.longToDateString(intent.getLongExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, -1));
 
         textTermDetailTitle.setText(intent.getStringExtra(TermAddEditActivity.EXTRA_TERM_TITLE));
-        textTermDetailDates.setText(getString(R.string.term_detail_dates, startDate, endDate));
+        textTermDetailDates.setText(getString(R.string.detail_dates, startDate, endDate));
     }
 
     private void addCourse() {

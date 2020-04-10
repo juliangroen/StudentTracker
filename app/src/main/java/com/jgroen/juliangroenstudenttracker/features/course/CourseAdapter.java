@@ -1,6 +1,8 @@
 package com.jgroen.juliangroenstudenttracker.features.course;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             courseListTitle = itemView.findViewById(R.id.courseListTitle);
             courseListStatus = itemView.findViewById(R.id.courseListStatus);
 
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                final CourseEntity current = courses.get(position);
+                Intent intent = new Intent(context, CourseDetailsActivity.class);
+                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_ID, current.getCourseID());
+                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE, current.getCourseTitle());
+                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS, current.getCourseStatus());
+                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, current.getCourseStartDate().getTime());
+                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, current.getCourseEndDate().getTime());
+                context.startActivity(intent);
+            });
         }
 
     }

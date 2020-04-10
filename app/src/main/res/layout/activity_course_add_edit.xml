@@ -1,9 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityCourseAddEdit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.course.CourseAddEditActivity">
+
+    <EditText
+        android:id="@+id/textCourseTitle"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:hint="@string/hint_enter_tile"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/large_padding"
+        android:paddingBottom="@dimen/large_padding"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/textCourseStatus"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:hint="@string/hint_enter_tile"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/large_padding"
+        android:paddingBottom="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@+id/textCourseTitle" />
+
+    <TextView
+        android:id="@+id/labelCourseStartDate"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/large_padding"
+        android:text="@string/label_start_date"
+        app:layout_constraintTop_toBottomOf="@id/textCourseStatus" />
+
+    <DatePicker
+        android:id="@+id/dateCourseStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:layout_marginTop="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/labelCourseStartDate" />
+
+    <TextView
+        android:id="@+id/labelCourseEndDate"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/large_padding"
+        android:text="@string/label_end_date"
+        app:layout_constraintTop_toBottomOf="@id/dateCourseStartDate" />
+
+    <DatePicker
+        android:id="@+id/dateCourseEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:layout_marginTop="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/labelCourseEndDate" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCourseSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_padding"
+        android:src="@drawable/ic_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

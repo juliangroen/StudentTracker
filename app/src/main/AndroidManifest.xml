@@ -28,11 +28,13 @@
 
         <activity
             android:name=".features.course.CourseDetailsActivity"
-            android:label="@string/activity_course_detail_title" />
+            android:label="@string/activity_course_detail_title"
+            android:parentActivityName=".features.term.TermDetailsActivity"/>
 
         <activity
             android:name=".features.course.CourseAddEditActivity"
-            android:label="@string/activity_course_add_title" />
+            android:label="@string/activity_course_add_title"
+            android:parentActivityName=".features.course.CourseDetailsActivity"/>
 
         <activity
             android:name=".features.term.TermDetailsActivity"

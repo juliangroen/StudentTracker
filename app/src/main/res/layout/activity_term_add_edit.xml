@@ -19,7 +19,7 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLines="1"
-        android:paddingTop="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
         android:paddingBottom="@dimen/large_padding"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingTop="@dimen/large_padding"
         android:text="@string/label_start_date"
+        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/textTermTitle" />
 
     <DatePicker
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:paddingTop="@dimen/small_padding"
+        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/labelTermStartDate" />
 
     <TextView
@@ -48,8 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingTop="@dimen/small_padding"
         android:text="@string/label_end_date"
+        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/dateStartDate" />
 
     <DatePicker
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
-        android:paddingTop="@dimen/small_padding"
+        android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/labelTermEndDate" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
