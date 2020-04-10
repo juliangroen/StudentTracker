@@ -1,15 +1,19 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgroen.juliangroenstudenttracker.R;
@@ -32,7 +36,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             termListStartDate = itemView.findViewById(R.id.termListStartDate);
             termListEndDate = itemView.findViewById(R.id.termListEndDate);
 
-            itemView.setOnClickListener(view -> {
+            /*itemView.setOnClickListener(view -> {
                 int position = getAdapterPosition();
                 final TermEntity current = terms.get(position);
                 // Intent intent = new Intent(context, TermAddEditActivity.class);
@@ -42,16 +46,19 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
                 intent.putExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, current.getTermStartDate().getTime());
                 intent.putExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, current.getTermEndDate().getTime());
                 context.startActivity(intent);
-            });
+            });*/
+
         }
 
     }
 
+    private final TermViewModel termViewModel;
     private final LayoutInflater inflater;
     private final Context context;
     private List<TermEntity> terms;
 
-    public TermAdapter(Context context) {
+    public TermAdapter(Context context, TermViewModel termViewModel) {
+        this.termViewModel = termViewModel;
         inflater = LayoutInflater.from(context);
         this.context = context;
     }
@@ -90,12 +97,48 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             holder.termListEndDate.setText("N/A");
 
         }
+
+        holder.itemView.setOnClickListener(view -> {
+            final TermEntity current = terms.get(position);
+            // Intent intent = new Intent(context, TermAddEditActivity.class);
+            Intent intent = new Intent(context, TermDetailsActivity.class);
+            intent.putExtra(TermAddEditActivity.EXTRA_TERM_ID, current.getTermID());
+            intent.putExtra(TermAddEditActivity.EXTRA_TERM_TITLE, current.getTermTitle());
+            intent.putExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, current.getTermStartDate().getTime());
+            intent.putExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, current.getTermEndDate().getTime());
+            context.startActivity(intent);
+
+        });
+
+        holder.itemView.setOnLongClickListener(view -> {
+
+            //termViewModel.delete(terms.get(position));
+            String[] options = {"Delete Term", "Cancel"};
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Choose an option")
+                    .setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which == 0) {
+                                termViewModel.delete(terms.get(position));
+                            }
+                        }
+                    }).show();
+            return true;
+        });
+
     }
 
     public void setTerms(List<TermEntity> termList) {
         terms = termList;
         notifyDataSetChanged();
     }
+
+    public void removeTerm(TermViewModel termViewModel) {
+
+    }
+
 
     @Override
     public int getItemCount() {

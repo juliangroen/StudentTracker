@@ -55,7 +55,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
-        final CourseAdapter adapter = new CourseAdapter(this);
+        final CourseAdapter adapter = new CourseAdapter(this, courseViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

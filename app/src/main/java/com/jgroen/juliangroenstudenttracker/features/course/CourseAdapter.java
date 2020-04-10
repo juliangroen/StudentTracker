@@ -1,6 +1,8 @@
 package com.jgroen.juliangroenstudenttracker.features.course;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,13 +45,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     }
 
+    private final CourseViewModel courseViewModel;
     private final LayoutInflater inflater;
     private final Context context;
     private List<CourseEntity> courses;
 
-    public CourseAdapter(Context context) {
+    public CourseAdapter(Context context, CourseViewModel courseViewModel) {
         inflater = LayoutInflater.from(context);
         this.context = context;
+        this.courseViewModel = courseViewModel;
     }
 
     @NonNull
@@ -74,6 +78,24 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             holder.courseListStatus.setText("N/A");
 
         }
+
+        holder.itemView.setOnLongClickListener(view -> {
+
+            //termViewModel.delete(terms.get(position));
+            String[] options = {"Delete Course", "Cancel"};
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Choose an option")
+                    .setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which == 0) {
+                                courseViewModel.delete(courses.get(position));
+                            }
+                        }
+                    }).show();
+            return true;
+        });
     }
 
     public void setCourses(List<CourseEntity> courseList) {

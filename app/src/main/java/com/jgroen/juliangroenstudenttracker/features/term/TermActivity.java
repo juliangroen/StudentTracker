@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.AdapterView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,7 +44,7 @@ public class TermActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.termRecyclerView);
-        final TermAdapter adapter = new TermAdapter(this);
+        final TermAdapter adapter = new TermAdapter(this, termViewModel);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -54,7 +55,7 @@ public class TermActivity extends AppCompatActivity {
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+        /*new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView,
@@ -66,7 +67,7 @@ public class TermActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             }
-        }).attachToRecyclerView(recyclerView);
+        }).attachToRecyclerView(recyclerView);*/
 
     }
 
@@ -89,4 +90,5 @@ public class TermActivity extends AppCompatActivity {
             Snackbar.make(findViewById(R.id.activityTerm), "Term Saved!", Snackbar.LENGTH_SHORT).show();
         }
     }
+
 }
