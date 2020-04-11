@@ -30,4 +30,7 @@ public interface CourseDao {
     @Query("SELECT * FROM course_table ORDER BY courseID ASC")
     LiveData<List<CourseEntity>> getAllCourses();
 
+    @Query("SELECT * FROM course_table WHERE termID=:termID")
+    LiveData<List<CourseEntity>> findCoursesForTerm(int termID);
+
 }

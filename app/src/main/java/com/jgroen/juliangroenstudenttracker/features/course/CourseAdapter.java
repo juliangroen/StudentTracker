@@ -30,17 +30,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             courseListTitle = itemView.findViewById(R.id.courseListTitle);
             courseListStatus = itemView.findViewById(R.id.courseListStatus);
 
-            itemView.setOnClickListener(view -> {
-                int position = getAdapterPosition();
-                final CourseEntity current = courses.get(position);
-                Intent intent = new Intent(context, CourseDetailsActivity.class);
-                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_ID, current.getCourseID());
-                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE, current.getCourseTitle());
-                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS, current.getCourseStatus());
-                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, current.getCourseStartDate().getTime());
-                intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, current.getCourseEndDate().getTime());
-                context.startActivity(intent);
-            });
         }
 
     }
@@ -78,6 +67,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             holder.courseListStatus.setText("N/A");
 
         }
+
+        holder.itemView.setOnClickListener(view -> {
+            final CourseEntity current = courses.get(position);
+            Intent intent = new Intent(context, CourseDetailsActivity.class);
+            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_ID, current.getCourseID());
+            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, current.getTermID());
+            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE, current.getCourseTitle());
+            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS, current.getCourseStatus());
+            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, current.getCourseStartDate().getTime());
+            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, current.getCourseEndDate().getTime());
+            context.startActivity(intent);
+        });
 
         holder.itemView.setOnLongClickListener(view -> {
 

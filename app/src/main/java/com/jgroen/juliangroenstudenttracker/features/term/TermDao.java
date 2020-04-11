@@ -26,4 +26,7 @@ public interface TermDao {
 
     @Query("SELECT * FROM term_table ORDER BY termID ASC")
     LiveData<List<TermEntity>> getAllTerms();
+
+    @Query("SELECT * FROM term_table ORDER BY termID ASC")
+    TermEntity[] loadAllTerms();
 }

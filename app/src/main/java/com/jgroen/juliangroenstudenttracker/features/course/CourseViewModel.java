@@ -14,6 +14,7 @@ public class CourseViewModel extends AndroidViewModel {
 
     private TrackerRepository repository;
     private LiveData<List<CourseEntity>> allCourses;
+    private LiveData<List<CourseEntity>> allCoursesOfTerm;
 
     public CourseViewModel(@NonNull Application application) {
         super(application);
@@ -24,6 +25,11 @@ public class CourseViewModel extends AndroidViewModel {
 
     public LiveData<List<CourseEntity>> getAllCourses() {
         return allCourses;
+    }
+
+    public LiveData<List<CourseEntity>> getAllCoursesForTerm(int termID) {
+        allCoursesOfTerm = repository.getAllCoursesForTerm(termID);
+        return allCoursesOfTerm;
     }
 
     public void insert(CourseEntity courseEntity) {

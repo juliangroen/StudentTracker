@@ -22,6 +22,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     public static final int ADD_COURSE_REQUEST_CODE = 1;
     public static final int EDIT_COURSE_REQUEST_CODE = 2;
     public static final String EXTRA_COURSE_ID = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_ID";
+    public static final String EXTRA_COURSE_TERM_ID = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_TERM_ID";
     public static final String EXTRA_COURSE_TITLE = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_TITLE";
     public static final String EXTRA_COURSE_STATUS = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_STATUS";
     public static final String EXTRA_COURSE_START_DATE = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_START_DATE";

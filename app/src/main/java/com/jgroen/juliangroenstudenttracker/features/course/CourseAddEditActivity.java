@@ -96,13 +96,14 @@ public class CourseAddEditActivity extends AppCompatActivity {
 
         if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_ID)) {
 
-            CourseEntity course = new CourseEntity(title, startDate, endDate, status);
+            CourseEntity course = new CourseEntity(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID,-1), title, startDate, endDate, status);
             course.setCourseID(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_ID, -1));
             courseViewModel.update(course);
 
         }
 
         Intent data = new Intent();
+        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1));
         data.putExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE, title);
         data.putExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS, status);
         data.putExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, startDate.getTime());

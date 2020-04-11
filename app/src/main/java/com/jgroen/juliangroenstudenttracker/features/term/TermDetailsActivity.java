@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,7 +60,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        courseViewModel.getAllCourses().observe(this, new Observer<List<CourseEntity>>() {
+        courseViewModel.getAllCoursesForTerm(intent.getIntExtra(TermAddEditActivity.EXTRA_TERM_ID, -1)).observe(this, new Observer<List<CourseEntity>>() {
             @Override
             public void onChanged(List<CourseEntity> courseEntities) {
                 adapter.setCourses(courseEntities);
@@ -98,6 +99,7 @@ public class TermDetailsActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(R.id.activityTermDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
 
             } else if (requestCode == CourseDetailsActivity.ADD_COURSE_REQUEST_CODE) {
+                int termID = data.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1);
                 String title = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE);
                 String status = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS);
                 Date startDate = new Date();
@@ -106,7 +108,7 @@ public class TermDetailsActivity extends AppCompatActivity {
                 startDate.setTime(data.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, -1));
                 endDate.setTime(data.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, -1));
 
-                CourseEntity course = new CourseEntity(title, startDate, endDate, status);
+                CourseEntity course = new CourseEntity(termID, title, startDate, endDate, status);
                 courseViewModel.insert(course);
 
                 Snackbar.make(findViewById(R.id.activityTermDetails), "Course Saved!", Snackbar.LENGTH_SHORT).show();
@@ -118,12 +120,6 @@ public class TermDetailsActivity extends AppCompatActivity {
         }
     }
 
-  /*  @Override
-    protected void onRestart() {
-        super.onRestart();
-        finish();
-    }*/
-
     private void setData(Intent intent) {
         String startDate = TrackerUtilities.longToDateString(intent.getLongExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, -1));
         String endDate = TrackerUtilities.longToDateString(intent.getLongExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, -1));
@@ -133,7 +129,11 @@ public class TermDetailsActivity extends AppCompatActivity {
     }
 
     private void addCourse() {
+        Intent previousIntent = getIntent();
+        int termId = previousIntent.getIntExtra(TermAddEditActivity.EXTRA_TERM_ID, -1);
+
         Intent intent = new Intent(TermDetailsActivity.this, CourseAddEditActivity.class);
+        intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, termId);
         startActivityForResult(intent, CourseDetailsActivity.ADD_COURSE_REQUEST_CODE);
     }
 }

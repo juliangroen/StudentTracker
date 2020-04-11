@@ -19,6 +19,7 @@ public class TrackerRepository {
 
     private LiveData<List<TermEntity>> allTerms;
     private LiveData<List<CourseEntity>> allCourses;
+    private LiveData<List<CourseEntity>> allCoursesOfTerm;
 
     public TrackerRepository(Application application) {
 
@@ -31,17 +32,15 @@ public class TrackerRepository {
         allCourses = courseDao.getAllCourses();
     }
 
-    public LiveData<List<TermEntity>> getAllTerms() {
-        return allTerms;
-    }
 
-    public LiveData<List<CourseEntity>> getAllCourses() {
-        return allCourses;
-    }
 
     ///////////////
     // TERM CRUD //
     ///////////////
+
+    public LiveData<List<TermEntity>> getAllTerms() {
+        return allTerms;
+    }
 
     public void insert (TermEntity termEntity) {
         new InsertTermAsyncTask(termDao).execute(termEntity);
@@ -114,6 +113,15 @@ public class TrackerRepository {
     /////////////////
     // COURSE CRUD //
     /////////////////
+
+    public LiveData<List<CourseEntity>> getAllCourses() {
+        return allCourses;
+    }
+
+    public LiveData<List<CourseEntity>> getAllCoursesForTerm(int termID) {
+        allCoursesOfTerm = courseDao.findCoursesForTerm(termID);
+        return allCoursesOfTerm;
+    }
 
     public void insert (CourseEntity courseEntity) {
         new InsertCourseAsyncTask(courseDao).execute(courseEntity);

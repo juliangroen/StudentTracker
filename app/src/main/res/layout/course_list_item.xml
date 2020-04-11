@@ -14,6 +14,7 @@
 
         <TextView
             android:text="Title"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:id="@+id/courseListTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
 
         <TextView
             android:text="Status"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:id="@+id/courseListStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
