@@ -1,6 +1,8 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,16 +15,37 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgroen.juliangroenstudenttracker.R;
+import com.jgroen.juliangroenstudenttracker.database.TrackerRepository;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {
+
+    private final LayoutInflater inflater;
+    private final Context context;
+    private List<TermEntity> terms;
+
+    private AdapterCallback callback;
+
+    public interface AdapterCallback {
+        void onItemClicked(TermEntity term);
+        void onItemLongClicked(TermEntity term);
+    }
+
+    public TermAdapter(Context context, AdapterCallback callback) {
+        this.callback = callback;
+        inflater = LayoutInflater.from(context);
+        this.context = context;
+    }
 
     class TermViewHolder extends RecyclerView.ViewHolder {
         private final TextView termListTitle;
@@ -38,17 +61,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
         }
 
-    }
-
-    private final TermViewModel termViewModel;
-    private final LayoutInflater inflater;
-    private final Context context;
-    private List<TermEntity> terms;
-
-    public TermAdapter(Context context, TermViewModel termViewModel) {
-        this.termViewModel = termViewModel;
-        inflater = LayoutInflater.from(context);
-        this.context = context;
     }
 
     @NonNull
@@ -87,34 +99,32 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
         }
 
         holder.itemView.setOnClickListener(view -> {
+            if (callback != null)
+                callback.onItemClicked(terms.get(position));
+        });
+
+        holder.itemView.setOnLongClickListener(view -> {
+            if (callback != null)
+                callback.onItemLongClicked(terms.get(position));
+            return true;
+        });
+
+
+        /*holder.itemView.setOnClickListener(view -> {
             final TermEntity current = terms.get(position);
-            // Intent intent = new Intent(context, TermAddEditActivity.class);
             Intent intent = new Intent(context, TermDetailsActivity.class);
             intent.putExtra(TermAddEditActivity.EXTRA_TERM_ID, current.getTermID());
             intent.putExtra(TermAddEditActivity.EXTRA_TERM_TITLE, current.getTermTitle());
             intent.putExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, current.getTermStartDate().getTime());
             intent.putExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, current.getTermEndDate().getTime());
             context.startActivity(intent);
+        });*/
 
-        });
+        /*holder.itemView.setOnLongClickListener(view -> {
+            removeTerm(terms.get(position));
 
-        holder.itemView.setOnLongClickListener(view -> {
-
-            //termViewModel.delete(terms.get(position));
-            String[] options = {"Delete Term", "Cancel"};
-
-            new AlertDialog.Builder(context)
-                    .setTitle("Choose an option")
-                    .setItems(options, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (which == 0) {
-                                termViewModel.delete(terms.get(position));
-                            }
-                        }
-                    }).show();
             return true;
-        });
+        });*/
 
     }
 
@@ -123,9 +133,28 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
         notifyDataSetChanged();
     }
 
-    public void removeTerm(TermViewModel termViewModel) {
+    public TermEntity getCurrentTerm(int position) {
+
+        return terms.get(position);
 
     }
+
+/*    public void removeTerm(TermEntity term) {
+
+        String[] options = {"Delete Term", "Cancel"};
+
+        new AlertDialog.Builder(context)
+                .setTitle("Choose an option")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            termViewModel.delete(term);
+                        }
+                    }
+                }).show();
+
+    }*/
 
 
     @Override

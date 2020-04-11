@@ -19,7 +19,6 @@ public class TrackerRepository {
 
     private LiveData<List<TermEntity>> allTerms;
     private LiveData<List<CourseEntity>> allCourses;
-    private LiveData<List<CourseEntity>> allCoursesOfTerm;
 
     public TrackerRepository(Application application) {
 
@@ -116,11 +115,6 @@ public class TrackerRepository {
 
     public LiveData<List<CourseEntity>> getAllCourses() {
         return allCourses;
-    }
-
-    public LiveData<List<CourseEntity>> getAllCoursesForTerm(int termID) {
-        allCoursesOfTerm = courseDao.findCoursesForTerm(termID);
-        return allCoursesOfTerm;
     }
 
     public void insert (CourseEntity courseEntity) {

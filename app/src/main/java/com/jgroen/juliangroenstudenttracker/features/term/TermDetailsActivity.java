@@ -26,6 +26,7 @@ import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseViewModel;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,9 +41,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_details);
-
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-
         textTermDetailTitle = findViewById(R.id.textTermDetailTitle);
         textTermDetailDates = findViewById(R.id.textTermDetailDates);
 
@@ -60,12 +59,27 @@ public class TermDetailsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        courseViewModel.getAllCoursesForTerm(intent.getIntExtra(TermAddEditActivity.EXTRA_TERM_ID, -1)).observe(this, new Observer<List<CourseEntity>>() {
+        courseViewModel.getAllCourses().observe(this, new Observer<List<CourseEntity>>() {
             @Override
             public void onChanged(List<CourseEntity> courseEntities) {
-                adapter.setCourses(courseEntities);
+                int termID = intent.getIntExtra(TermAddEditActivity.EXTRA_TERM_ID, -1);
+                List<CourseEntity> courseList = new ArrayList<CourseEntity>();
+                for (CourseEntity course: courseEntities) {
+                    if (termID == course.getTermID())
+                        courseList.add(course);
+                }
+                adapter.setCourses(courseList);
+                TermActivity.numCourses = courseList.size();
+
+                if (intent.hasExtra(TermActivity.EXTRA_DELETE_FLAG)) {
+                    Intent data = new Intent();
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
             }
         });
+
+
     }
 
     @Override
