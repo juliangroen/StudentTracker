@@ -34,10 +34,10 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
     public static final int ADD_TERM_REQUEST_CODE = 1;
     public static final int EDIT_TERM_REQUEST_CODE = 2;
     public static final int DELETE_TERM_REQUEST_CODE = 3;
-    public static final String EXTRA_DELETE_FLAG = "com.jgroen.juliangroenstudenttracker.EXTRA_DELETE_FLAG";
 
-    public static int numCourses;
-    public static TermEntity currentTerm;
+    public static final String EXTRA_TERM_OBJ = "com.jgroen.juliangroenstudenttracker.EXTRA_TERM_OBJ";
+    public static final String EXTRA_DELETE_FLAG = "com.jgroen.juliangroenstudenttracker.EXTRA_DELETE_FLAG";
+    public static final String EXTRA_NUM_COURSE = "com.jgroen.juliangroenstudenttracker.EXTRA_NUM_COURSE";
 
     private TermViewModel termViewModel;
 
@@ -102,11 +102,14 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
                 Snackbar.make(findViewById(R.id.activityTerm), "Term Saved!", Snackbar.LENGTH_SHORT).show();
 
             } else if (requestCode == DELETE_TERM_REQUEST_CODE) {
-                if (numCourses <= 0) {
-                    termViewModel.delete(currentTerm);
-                    Snackbar.make(findViewById(R.id.activityTerm), "Term Deleted!", Snackbar.LENGTH_SHORT).show();
-                } else {
-                    Snackbar.make(findViewById(R.id.activityTerm), "Can't delete Term with linked courses!", Snackbar.LENGTH_SHORT).show();
+                if (data.hasExtra(EXTRA_NUM_COURSE)) {
+                    if (data.getIntExtra(EXTRA_NUM_COURSE, -1) == 0) {
+                        //termViewModel.delete(currentTerm);
+                        termViewModel.delete((TermEntity)data.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ));
+                        Snackbar.make(findViewById(R.id.activityTerm), "Term Deleted!", Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        Snackbar.make(findViewById(R.id.activityTerm), "Can't delete Term with linked courses!", Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
@@ -134,12 +137,15 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
 
-                            currentTerm = term;
                             Intent intent = new Intent(TermActivity.this, TermDetailsActivity.class);
+
+                            intent.putExtra(TermActivity.EXTRA_TERM_OBJ, term);
+
                             intent.putExtra(TermAddEditActivity.EXTRA_TERM_ID, term.getTermID());
                             intent.putExtra(TermAddEditActivity.EXTRA_TERM_TITLE, term.getTermTitle());
                             intent.putExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, term.getTermStartDate().getTime());
                             intent.putExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, term.getTermEndDate().getTime());
+
                             intent.putExtra(EXTRA_DELETE_FLAG, true);
                             startActivityForResult(intent, DELETE_TERM_REQUEST_CODE);
                             overridePendingTransition(0, 0);

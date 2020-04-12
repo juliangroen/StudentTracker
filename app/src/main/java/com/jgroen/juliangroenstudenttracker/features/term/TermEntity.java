@@ -3,10 +3,11 @@ package com.jgroen.juliangroenstudenttracker.features.term;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "term_table")
-public class TermEntity {
+public class TermEntity implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int termID;
     private String termTitle;

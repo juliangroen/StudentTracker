@@ -69,10 +69,11 @@ public class TermDetailsActivity extends AppCompatActivity {
                         courseList.add(course);
                 }
                 adapter.setCourses(courseList);
-                TermActivity.numCourses = courseList.size();
 
                 if (intent.hasExtra(TermActivity.EXTRA_DELETE_FLAG)) {
                     Intent data = new Intent();
+                    data.putExtra(TermActivity.EXTRA_NUM_COURSE, courseList.size());
+                    data.putExtra(TermActivity.EXTRA_TERM_OBJ, intent.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ));
                     setResult(RESULT_OK, data);
                     finish();
                 }
