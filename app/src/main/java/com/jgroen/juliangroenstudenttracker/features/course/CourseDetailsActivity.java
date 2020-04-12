@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,6 +32,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
     private TextView textCourseDetailTitle;
     private TextView textCourseDetailDates;
     private TextView textCourseDetailStatus;
+    private TextView textCourseNote;
+    private TextView textCourseInstructorName;
+    private TextView textCourseInstructorNumber;
+    private TextView textCourseInstructorEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
         textCourseDetailTitle = findViewById(R.id.textCourseDetailTitle);
         textCourseDetailDates = findViewById(R.id.textCourseDetailDates);
         textCourseDetailStatus = findViewById(R.id.textCourseDetailStatus);
+        textCourseNote = findViewById(R.id.textCourseNote);
+        textCourseInstructorName = findViewById(R.id.textCourseInstructorName);
+        textCourseInstructorNumber = findViewById(R.id.textCourseInstructorNumber);
+        textCourseInstructorEmail = findViewById(R.id.textCourseInstructorEmail);
 
         Intent intent = getIntent();
 
@@ -102,7 +111,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
         String endDate = TrackerUtilities.longToDateString(intent.getLongExtra(EXTRA_COURSE_END_DATE, -1));
 
         textCourseDetailTitle.setText(intent.getStringExtra(EXTRA_COURSE_TITLE));
+        textCourseDetailTitle.setTypeface(null, Typeface.BOLD);
         textCourseDetailStatus.setText(intent.getStringExtra(EXTRA_COURSE_STATUS));
         textCourseDetailDates.setText(getString(R.string.detail_dates, startDate, endDate));
+        textCourseInstructorName.setText(getString(R.string.course_instructor_name, ""));
+        textCourseInstructorNumber.setText(getString(R.string.course_instructor_Number, ""));
+        textCourseInstructorEmail.setText(getString(R.string.course_instructor_Email, ""));
     }
 }

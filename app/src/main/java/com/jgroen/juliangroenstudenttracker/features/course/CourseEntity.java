@@ -25,6 +25,10 @@ public class CourseEntity {
     private Date courseStartDate;
     private Date courseEndDate;
     private String courseStatus;
+    private String courseNote;
+    private String courseInstructorName;
+    private String courseInstructorNumber;
+    private String courseInstructorEmail;
 
     public CourseEntity(int termID, String courseTitle, Date courseStartDate, Date courseEndDate, String courseStatus) {
         this.termID = termID;
@@ -80,6 +84,38 @@ public class CourseEntity {
 
     public void setCourseStatus(String courseStatus) {
         this.courseStatus = courseStatus;
+    }
+
+    public String getCourseNote() {
+        return courseNote;
+    }
+
+    public void setCourseNote(String courseNote) {
+        this.courseNote = courseNote;
+    }
+
+    public String getCourseInstructorName() {
+        return courseInstructorName;
+    }
+
+    public void setCourseInstructorName(String courseInstructorName) {
+        this.courseInstructorName = courseInstructorName;
+    }
+
+    public String getCourseInstructorNumber() {
+        return courseInstructorNumber;
+    }
+
+    public void setCourseInstructorNumber(String courseInstructorNumber) {
+        this.courseInstructorNumber = courseInstructorNumber;
+    }
+
+    public String getCourseInstructorEmail() {
+        return courseInstructorEmail;
+    }
+
+    public void setCourseInstructorEmail(String courseInstructorEmail) {
+        this.courseInstructorEmail = courseInstructorEmail;
     }
 }
 

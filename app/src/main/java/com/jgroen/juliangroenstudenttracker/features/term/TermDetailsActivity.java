@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -140,6 +141,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         String endDate = TrackerUtilities.longToDateString(intent.getLongExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, -1));
 
         textTermDetailTitle.setText(intent.getStringExtra(TermAddEditActivity.EXTRA_TERM_TITLE));
+        textTermDetailTitle.setTypeface(null, Typeface.BOLD);
         textTermDetailDates.setText(getString(R.string.detail_dates, startDate, endDate));
     }
 

@@ -20,7 +20,7 @@
     <TextView
         android:text="Status"
         android:id="@+id/textCourseDetailStatus"
-        style="@style/TextAppearance.AppCompat.Headline"
+        style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -30,12 +30,70 @@
     <TextView
         android:text="01/01/2020 to 02/15/2020"
         android:id="@+id/textCourseDetailDates"
-        style="@style/TextAppearance.AppCompat.Headline"
+        style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/large_padding"
         app:layout_constraintTop_toBottomOf="@id/textCourseDetailStatus"/>
+
+    <TextView
+        android:text="@string/label_course_note"
+        android:id="@+id/labelCourseNote"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/textCourseDetailDates"/>
+
+    <TextView
+        android:id="@+id/textCourseNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_dark_background"
+        android:padding="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginStart="@dimen/large_padding"
+        android:layout_marginEnd="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/labelCourseNote"/>
+
+    <TextView
+        android:text="@string/label_instructor"
+        android:id="@+id/labelCourseInstructor"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/textCourseNote"/>
+
+    <TextView
+        android:id="@+id/textCourseInstructorName"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginStart="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/labelCourseInstructor"/>
+
+    <TextView
+        android:id="@+id/textCourseInstructorNumber"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginStart="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/textCourseInstructorName"/>
+
+    <TextView
+        android:id="@+id/textCourseInstructorEmail"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginStart="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/textCourseInstructorNumber"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAssessmentAdd"

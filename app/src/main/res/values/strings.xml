@@ -19,4 +19,13 @@
 
     <string name="detail_dates">%1$s to %2$s</string>
     <string name="hint_enter_status">Enter a status</string>
+    <string name="label_course_note">Course Note:</string>
+    <string name="label_instructor">Instructor:</string>
+    <string name="course_instructor_name">Name: %1$s</string>
+    <string name="course_instructor_Number">Phone: %1$s</string>
+    <string name="course_instructor_Email">Email: %1$s</string>
+    <string name="hint_course_note">Enter course notes here</string>
+    <string name="hint_instructor_name">Enter Instructor Name</string>
+    <string name="hint_instructor_number">Enter Instructor Phone Number</string>
+    <string name="hint_instructor_email">Enter Instructor Email</string>
 </resources>
