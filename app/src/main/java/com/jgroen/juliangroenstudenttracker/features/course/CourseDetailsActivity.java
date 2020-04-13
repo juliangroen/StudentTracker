@@ -28,11 +28,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
     public static final String EXTRA_COURSE_STATUS = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_STATUS";
     public static final String EXTRA_COURSE_START_DATE = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_START_DATE";
     public static final String EXTRA_COURSE_END_DATE = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_END_DATE";
+    public static final String EXTRA_COURSE_NOTE = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_NOTE";
+    public static final String EXTRA_COURSE_INSTRUCTOR_NAME = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NAME";
+    public static final String EXTRA_COURSE_INSTRUCTOR_NUMBER = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NUMBER";
+    public static final String EXTRA_COURSE_INSTRUCTOR_EMAIL = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_EMAIL";
 
     private TextView textCourseDetailTitle;
     private TextView textCourseDetailDates;
     private TextView textCourseDetailStatus;
-    private TextView textCourseNote;
+    private TextView textCourseDetailNote;
     private TextView textCourseInstructorName;
     private TextView textCourseInstructorNumber;
     private TextView textCourseInstructorEmail;
@@ -45,7 +49,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         textCourseDetailTitle = findViewById(R.id.textCourseDetailTitle);
         textCourseDetailDates = findViewById(R.id.textCourseDetailDates);
         textCourseDetailStatus = findViewById(R.id.textCourseDetailStatus);
-        textCourseNote = findViewById(R.id.textCourseNote);
+        textCourseDetailNote = findViewById(R.id.textCourseDetailNote);
         textCourseInstructorName = findViewById(R.id.textCourseInstructorName);
         textCourseInstructorNumber = findViewById(R.id.textCourseInstructorNumber);
         textCourseInstructorEmail = findViewById(R.id.textCourseInstructorEmail);
@@ -98,8 +102,12 @@ public class CourseDetailsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            setData(data);
-            Snackbar.make(findViewById(R.id.activityCourseDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
+            if (requestCode == EDIT_COURSE_REQUEST_CODE) {
+                setData(data);
+                Snackbar.make(findViewById(R.id.activityCourseDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
+            } else {
+                setData(getIntent());
+            }
         }
     }
 
@@ -114,8 +122,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
         textCourseDetailTitle.setTypeface(null, Typeface.BOLD);
         textCourseDetailStatus.setText(intent.getStringExtra(EXTRA_COURSE_STATUS));
         textCourseDetailDates.setText(getString(R.string.detail_dates, startDate, endDate));
-        textCourseInstructorName.setText(getString(R.string.course_instructor_name, ""));
-        textCourseInstructorNumber.setText(getString(R.string.course_instructor_Number, ""));
-        textCourseInstructorEmail.setText(getString(R.string.course_instructor_Email, ""));
+        textCourseDetailNote.setText(intent.getStringExtra(EXTRA_COURSE_NOTE));
+        textCourseInstructorName.setText(getString(R.string.course_instructor_name,
+                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NAME) != null)
+                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NAME) : ""));
+        textCourseInstructorNumber.setText(getString(R.string.course_instructor_Number,
+                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NUMBER) != null)
+                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NUMBER) : ""));
+        textCourseInstructorEmail.setText(getString(R.string.course_instructor_Email,
+                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) != null)
+                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) : ""));
     }
 }

@@ -120,11 +120,19 @@ public class TermDetailsActivity extends AppCompatActivity {
                 String status = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS);
                 Date startDate = new Date();
                 Date endDate = new Date();
+                String note = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_NOTE);
+                String name = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NAME);
+                String number = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NUMBER);
+                String email = data.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_EMAIL);
 
                 startDate.setTime(data.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, -1));
                 endDate.setTime(data.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, -1));
 
                 CourseEntity course = new CourseEntity(termID, title, startDate, endDate, status);
+                course.setCourseNote(note);
+                course.setCourseInstructorName(name);
+                course.setCourseInstructorNumber(number);
+                course.setCourseInstructorEmail(email);
                 courseViewModel.insert(course);
 
                 Snackbar.make(findViewById(R.id.activityTermDetails), "Course Saved!", Snackbar.LENGTH_SHORT).show();

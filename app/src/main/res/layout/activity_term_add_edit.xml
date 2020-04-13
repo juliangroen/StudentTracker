@@ -1,72 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activityTermAddEdit"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.term.TermAddEditActivity">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/textTermTitle"
-        style="@style/TextAppearance.AppCompat.Headline"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:hint="@string/hint_enter_tile"
-        android:imeOptions="actionDone"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:maxLines="1"
-        android:layout_marginTop="@dimen/large_padding"
-        android:paddingBottom="@dimen/large_padding"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/labelTermStartDate"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/label_start_date"
-        android:layout_marginTop="@dimen/large_padding"
-        app:layout_constraintTop_toBottomOf="@id/textTermTitle" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activityTermAddEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".features.term.TermAddEditActivity">
 
-    <DatePicker
-        android:id="@+id/dateStartDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        app:layout_constraintTop_toBottomOf="@id/labelTermStartDate" />
+            <EditText
+                android:id="@+id/textTermTitle"
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_enter_tile"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/large_padding"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/labelTermEndDate"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/label_end_date"
-        app:layout_constraintTop_toBottomOf="@id/dateStartDate" />
+            <TextView
+                android:id="@+id/labelTermStartDate"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:text="@string/label_start_date"
+                app:layout_constraintTop_toBottomOf="@id/textTermTitle" />
 
-    <DatePicker
-        android:id="@+id/dateEndDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        app:layout_constraintTop_toBottomOf="@id/labelTermEndDate" />
+            <DatePicker
+                android:id="@+id/dateStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintTop_toBottomOf="@id/labelTermStartDate" />
+
+            <TextView
+                android:id="@+id/labelTermEndDate"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/label_end_date"
+                app:layout_constraintTop_toBottomOf="@id/dateStartDate" />
+
+            <DatePicker
+                android:id="@+id/dateEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintTop_toBottomOf="@id/labelTermEndDate" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_term_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/large_padding"
         android:src="@drawable/ic_save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="32dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</RelativeLayout>

@@ -90,12 +90,18 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
 
             courseDao.deleteAllCourses();
 
-            courseDao.insert(new CourseEntity(
+            CourseEntity course1 = new CourseEntity(
                     terms[0].getTermID(),
                     "Course 1",
                     new GregorianCalendar(2020, Calendar.MARCH, 1).getTime(),
                     new GregorianCalendar(2020, Calendar.APRIL, 15).getTime(),
-                    "In Progress"));
+                    "In Progress");
+            course1.setCourseNote("lorem ipsum");
+            course1.setCourseInstructorName("Takumi Fujiwara");
+            course1.setCourseInstructorNumber("385-428-1000");
+            course1.setCourseInstructorEmail("takumi@fujiwaratofu.co.jp");
+            courseDao.insert(course1);
+
             courseDao.insert(new CourseEntity(
                     terms[1].getTermID(),
                     "Course 2",

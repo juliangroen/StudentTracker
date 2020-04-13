@@ -1,167 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    >
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activityCourseAddEdit"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.course.CourseAddEditActivity">
+        android:fillViewport="true">
 
-        <EditText
-            android:id="@+id/textCourseTitle"
-            style="@style/TextAppearance.AppCompat.Large"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activityCourseAddEdit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:hint="@string/hint_enter_tile"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/large_padding"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            tools:context=".features.course.CourseAddEditActivity">
 
-        <EditText
-            android:id="@+id/textCourseStatus"
-            style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:hint="@string/hint_enter_status"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/large_padding"
-            app:layout_constraintTop_toBottomOf="@+id/textCourseTitle" />
+            <EditText
+                android:id="@+id/textCourseTitle"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_enter_tile"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/large_padding"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/labelCourseStartDate"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:text="@string/label_start_date"
-            app:layout_constraintTop_toBottomOf="@id/textCourseStatus" />
+            <EditText
+                android:id="@+id/textCourseStatus"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_enter_status"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/large_padding"
+                app:layout_constraintTop_toBottomOf="@+id/textCourseTitle" />
 
-        <DatePicker
-            android:id="@+id/dateCourseStartDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            app:layout_constraintTop_toBottomOf="@id/labelCourseStartDate" />
+            <TextView
+                android:id="@+id/labelCourseStartDate"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:text="@string/label_start_date"
+                app:layout_constraintTop_toBottomOf="@id/textCourseStatus" />
 
-        <TextView
-            android:id="@+id/labelCourseEndDate"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/label_end_date"
-            app:layout_constraintTop_toBottomOf="@id/dateCourseStartDate" />
+            <DatePicker
+                android:id="@+id/dateCourseStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintTop_toBottomOf="@id/labelCourseStartDate" />
 
-        <DatePicker
-            android:id="@+id/dateCourseEndDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            app:layout_constraintTop_toBottomOf="@id/labelCourseEndDate" />
+            <TextView
+                android:id="@+id/labelCourseEndDate"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/label_end_date"
+                app:layout_constraintTop_toBottomOf="@id/dateCourseStartDate" />
 
-        <TextView
-            android:id="@+id/labelCourseNoteAddEdit"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:text="@string/label_course_note"
-            app:layout_constraintTop_toBottomOf="@+id/dateCourseEndDate" />
+            <DatePicker
+                android:id="@+id/dateCourseEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintTop_toBottomOf="@id/labelCourseEndDate" />
 
-        <EditText
-            android:id="@+id/editCourseNote"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
-            android:padding="@dimen/large_padding"
-            android:layout_marginTop="@dimen/large_padding"
-            android:layout_marginStart="@dimen/large_padding"
-            android:layout_marginEnd="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:hint="@string/hint_course_note"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            app:layout_constraintTop_toBottomOf="@+id/labelCourseNoteAddEdit" />
+            <TextView
+                android:id="@+id/labelCourseNoteAddEdit"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:text="@string/label_course_note"
+                app:layout_constraintTop_toBottomOf="@+id/dateCourseEndDate" />
 
-        <TextView
-            android:id="@+id/labelCourseInstructorAddEdit"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:text="@string/label_instructor"
-            app:layout_constraintTop_toBottomOf="@+id/editCourseNote" />
+            <EditText
+                android:id="@+id/editCourseNote"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_padding"
+                android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginEnd="@dimen/large_padding"
+                android:background="@color/cardview_dark_background"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_course_note"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/large_padding"
+                app:layout_constraintTop_toBottomOf="@+id/labelCourseNoteAddEdit" />
 
-        <EditText
-            android:id="@+id/editCourseInstructorName"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:hint="@string/hint_instructor_name"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@+id/labelCourseInstructorAddEdit" />
+            <TextView
+                android:id="@+id/labelCourseInstructorAddEdit"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:text="@string/label_instructor"
+                app:layout_constraintTop_toBottomOf="@+id/editCourseNote" />
 
-        <EditText
-            android:id="@+id/editCourseInstructorNumber"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:hint="@string/hint_instructor_number"
-            android:importantForAutofill="no"
-            android:inputType="phone"
-            app:layout_constraintTop_toBottomOf="@+id/editCourseInstructorName" />
+            <EditText
+                android:id="@+id/editCourseInstructorName"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_instructor_name"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                app:layout_constraintTop_toBottomOf="@+id/labelCourseInstructorAddEdit" />
 
-        <EditText
-            android:id="@+id/editCourseInstructorEmail"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_padding"
-            android:gravity="center_horizontal"
-            android:hint="@string/hint_instructor_email"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            app:layout_constraintTop_toBottomOf="@+id/editCourseInstructorNumber" />
+            <EditText
+                android:id="@+id/editCourseInstructorNumber"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_instructor_number"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                app:layout_constraintTop_toBottomOf="@+id/editCourseInstructorName" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabCourseSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_padding"
-            android:src="@drawable/ic_save"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:maxImageSize="32dp" />
+            <EditText
+                android:id="@+id/editCourseInstructorEmail"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:hint="@string/hint_instructor_email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                app:layout_constraintTop_toBottomOf="@+id/editCourseInstructorNumber" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCourseSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_padding"
+        android:src="@drawable/ic_save"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:maxImageSize="32dp" />
+
+</RelativeLayout>
