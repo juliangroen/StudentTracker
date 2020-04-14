@@ -18,6 +18,7 @@
     <string name="term_list_item_end_date">End: %1$s</string>
     <string name="assessment_list_item_due_date"><b>Due Date:</b> %1$s</string>
     <string name="assessment_list_item_type">[ %1$s ]</string>
+    <string name="assessment_type">%1$s Assessment</string>
 
     <string name="detail_dates">%1$s to %2$s</string>
     <string name="hint_enter_status">Enter a status</string>

@@ -8,9 +8,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentAdapter;
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentDetailsActivity;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentViewModel;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
@@ -28,7 +32,7 @@ import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseDetailsActivity extends AppCompatActivity {
+public class CourseDetailsActivity extends AppCompatActivity implements AssessmentAdapter.AdapterCallback {
 
     public static final int ADD_COURSE_REQUEST_CODE = 1;
     public static final int EDIT_COURSE_REQUEST_CODE = 2;
@@ -42,6 +46,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     public static final String EXTRA_COURSE_INSTRUCTOR_NAME = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NAME";
     public static final String EXTRA_COURSE_INSTRUCTOR_NUMBER = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NUMBER";
     public static final String EXTRA_COURSE_INSTRUCTOR_EMAIL = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_EMAIL";
+    public static final String EXTRA_ASSESSMENT_OBJECT = "com.jgroen.juliangroenstudenttracker.EXTRA_ASSESSMENT_OBJECT";
 
     private TextView textCourseDetailTitle;
     private TextView textCourseDetailDates;
@@ -78,7 +83,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
-        final AssessmentAdapter adapter = new AssessmentAdapter(this, assessmentViewModel);
+        final AssessmentAdapter adapter = new AssessmentAdapter(this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -87,7 +92,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onChanged(List<AssessmentEntity> assessmentEntities) {
                 int courseID = intent.getIntExtra(EXTRA_COURSE_ID, -1);
                 List<AssessmentEntity> assessmentList = new ArrayList<AssessmentEntity>();
-                for (AssessmentEntity assessment: assessmentEntities) {
+                for (AssessmentEntity assessment : assessmentEntities) {
                     if (courseID == assessment.getCourseID()) {
                         assessmentList.add(assessment);
                     }
@@ -137,7 +142,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_COURSE_REQUEST_CODE) {
                 setData(data);
-                Snackbar.make(findViewById(R.id.activityCourseDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(R.id.activityCourseDetails), "Course Updated!", Snackbar.LENGTH_SHORT).show();
             } else {
                 setData(getIntent());
             }
@@ -165,5 +170,29 @@ public class CourseDetailsActivity extends AppCompatActivity {
         textCourseInstructorEmail.setText(getString(R.string.course_instructor_Email,
                 (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) != null)
                         ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) : ""));
+    }
+
+    @Override
+    public void onItemClicked(AssessmentEntity assessment) {
+        Intent intent = new Intent(CourseDetailsActivity.this, AssessmentDetailsActivity.class);
+        intent.putExtra(EXTRA_ASSESSMENT_OBJECT, assessment);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClicked(AssessmentEntity assessment) {
+        String[] options = {"Delete Assessment", "Cancel"};
+
+        new AlertDialog.Builder(this)
+                .setTitle("Choose an option")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            assessmentViewModel.delete(assessment);
+                            Snackbar.make(findViewById(R.id.activityCourseDetails), "Assessment Deleted!", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                }).show();
     }
 }

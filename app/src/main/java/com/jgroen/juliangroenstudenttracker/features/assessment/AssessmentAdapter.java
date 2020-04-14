@@ -11,21 +11,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgroen.juliangroenstudenttracker.R;
+import com.jgroen.juliangroenstudenttracker.features.term.TermAdapter;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
 import java.util.List;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.AssessmentViewHolder> {
 
-    private final AssessmentViewModel assessmentViewModel;
     private final LayoutInflater inflater;
     private final Context context;
     private List<AssessmentEntity> assessments;
 
-    public AssessmentAdapter(Context context, AssessmentViewModel assessmentViewModel) {
+    private AdapterCallback callback;
+
+    public interface AdapterCallback {
+        void onItemClicked(AssessmentEntity assessment);
+        void onItemLongClicked(AssessmentEntity assessment);
+    }
+
+    public AssessmentAdapter(Context context, AdapterCallback callback) {
         inflater = LayoutInflater.from(context);
         this.context = context;
-        this.assessmentViewModel = assessmentViewModel;
+        this.callback = callback;
     }
 
     class AssessmentViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +63,6 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
             String type = current.getAssessmentType().substring(0,1);
             holder.assessmentListType.setText(type);
             holder.assessmentListType.setTypeface(null, Typeface.BOLD);
-            //holder.assessmentListType.setText(context.getResources().getString(R.string.assessment_list_item_type, type));
             holder.assessmentListTitle.setText(current.getAssessmentTitle());
 
             String dueDate = context.getResources().getString(
@@ -68,6 +74,17 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
             holder.assessmentListTitle.setText("N/A");
             holder.assessmentListDueDate.setText("N/A");
         }
+
+        holder.itemView.setOnClickListener(view -> {
+            if (callback != null)
+                callback.onItemClicked(assessments.get(position));
+        });
+
+        holder.itemView.setOnLongClickListener(view -> {
+            if (callback != null)
+                callback.onItemLongClicked(assessments.get(position));
+            return true;
+        });
     }
 
     public void setAssessments(List<AssessmentEntity> assessmentList) {

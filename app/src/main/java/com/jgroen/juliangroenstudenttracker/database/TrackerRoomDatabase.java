@@ -151,6 +151,14 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
                     new GregorianCalendar(2020, Calendar.APRIL, 1).getTime());
             assessmentDao.insert(assessment2);
 
+            for (int i = 0; i < 6; i++) {
+                assessmentDao.insert(new AssessmentEntity(
+                        courses[0].getCourseID(),
+                        "Assessment " + (i + 3),
+                        "Objective",
+                        new GregorianCalendar(2020, Calendar.APRIL, 1).getTime()));
+            }
+
             return null;
         }
     }

@@ -149,6 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
+                android:paddingBottom="@dimen/large_padding"
                 android:gravity="center_horizontal"
                 android:hint="@string/hint_instructor_email"
                 android:importantForAutofill="no"
