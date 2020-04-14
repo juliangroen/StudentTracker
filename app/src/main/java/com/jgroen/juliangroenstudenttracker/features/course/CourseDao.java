@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public interface CourseDao {
     @Query("SELECT * FROM course_table ORDER BY courseID ASC")
     LiveData<List<CourseEntity>> getAllCourses();
 
+    @Query("SELECT * FROM course_table ORDER BY courseID ASC")
+    CourseEntity[] loadAllCourses();
 }

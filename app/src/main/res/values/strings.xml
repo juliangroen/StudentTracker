@@ -16,6 +16,8 @@
 
     <string name="term_list_item_start_date">Start: %1$s</string>
     <string name="term_list_item_end_date">End: %1$s</string>
+    <string name="assessment_list_item_due_date"><b>Due Date:</b> %1$s</string>
+    <string name="assessment_list_item_type">[ %1$s ]</string>
 
     <string name="detail_dates">%1$s to %2$s</string>
     <string name="hint_enter_status">Enter a status</string>
@@ -28,4 +30,5 @@
     <string name="hint_instructor_name">Enter Instructor Name</string>
     <string name="hint_instructor_number">Enter Instructor Phone Number</string>
     <string name="hint_instructor_email">Enter Instructor Email</string>
+    <string name="label_course_assessments">Assessments:</string>
 </resources>

@@ -3,6 +3,10 @@ package com.jgroen.juliangroenstudenttracker.features.course;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,7 +20,13 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentAdapter;
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentViewModel;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CourseDetailsActivity extends AppCompatActivity {
 
@@ -41,6 +51,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
     private TextView textCourseInstructorNumber;
     private TextView textCourseInstructorEmail;
 
+    private AssessmentViewModel assessmentViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +66,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
         textCourseInstructorNumber = findViewById(R.id.textCourseInstructorNumber);
         textCourseInstructorEmail = findViewById(R.id.textCourseInstructorEmail);
 
+        assessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
+
         Intent intent = getIntent();
 
         setData(intent);
@@ -61,6 +75,25 @@ public class CourseDetailsActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fabAssessmentAdd);
         fab.setOnClickListener(view -> {
             addAssessment();
+        });
+
+        RecyclerView recyclerView = findViewById(R.id.assessmentRecyclerView);
+        final AssessmentAdapter adapter = new AssessmentAdapter(this, assessmentViewModel);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        assessmentViewModel.getAllAssessments().observe(this, new Observer<List<AssessmentEntity>>() {
+            @Override
+            public void onChanged(List<AssessmentEntity> assessmentEntities) {
+                int courseID = intent.getIntExtra(EXTRA_COURSE_ID, -1);
+                List<AssessmentEntity> assessmentList = new ArrayList<AssessmentEntity>();
+                for (AssessmentEntity assessment: assessmentEntities) {
+                    if (courseID == assessment.getCourseID()) {
+                        assessmentList.add(assessment);
+                    }
+                }
+                adapter.setAssessments(assessmentList);
+            }
         });
     }
 

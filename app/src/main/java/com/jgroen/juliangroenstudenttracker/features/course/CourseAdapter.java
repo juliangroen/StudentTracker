@@ -19,6 +19,18 @@ import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
 
+
+    private final CourseViewModel courseViewModel;
+    private final LayoutInflater inflater;
+    private final Context context;
+    private List<CourseEntity> courses;
+
+    public CourseAdapter(Context context, CourseViewModel courseViewModel) {
+        inflater = LayoutInflater.from(context);
+        this.context = context;
+        this.courseViewModel = courseViewModel;
+    }
+
     class CourseViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView courseListTitle;
@@ -32,17 +44,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
         }
 
-    }
-
-    private final CourseViewModel courseViewModel;
-    private final LayoutInflater inflater;
-    private final Context context;
-    private List<CourseEntity> courses;
-
-    public CourseAdapter(Context context, CourseViewModel courseViewModel) {
-        inflater = LayoutInflater.from(context);
-        this.context = context;
-        this.courseViewModel = courseViewModel;
     }
 
     @NonNull

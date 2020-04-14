@@ -31,7 +31,6 @@
             android:layout_weight="0.5"
             android:padding="@dimen/large_padding"
             />
-            />
 
     </LinearLayout>
 

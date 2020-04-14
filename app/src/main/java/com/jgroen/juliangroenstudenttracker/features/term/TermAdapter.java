@@ -109,23 +109,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             return true;
         });
 
-
-        /*holder.itemView.setOnClickListener(view -> {
-            final TermEntity current = terms.get(position);
-            Intent intent = new Intent(context, TermDetailsActivity.class);
-            intent.putExtra(TermAddEditActivity.EXTRA_TERM_ID, current.getTermID());
-            intent.putExtra(TermAddEditActivity.EXTRA_TERM_TITLE, current.getTermTitle());
-            intent.putExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, current.getTermStartDate().getTime());
-            intent.putExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, current.getTermEndDate().getTime());
-            context.startActivity(intent);
-        });*/
-
-        /*holder.itemView.setOnLongClickListener(view -> {
-            removeTerm(terms.get(position));
-
-            return true;
-        });*/
-
     }
 
     public void setTerms(List<TermEntity> termList) {
@@ -139,31 +122,11 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     }
 
-/*    public void removeTerm(TermEntity term) {
-
-        String[] options = {"Delete Term", "Cancel"};
-
-        new AlertDialog.Builder(context)
-                .setTitle("Choose an option")
-                .setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            termViewModel.delete(term);
-                        }
-                    }
-                }).show();
-
-    }*/
-
-
     @Override
     public int getItemCount() {
         if (terms != null)
             return terms.size();
         else return 0;
     }
-
-
 
 }

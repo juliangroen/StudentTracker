@@ -14,6 +14,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentDao;
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseDao;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.features.term.TermDao;
@@ -22,12 +24,13 @@ import com.jgroen.juliangroenstudenttracker.utils.Converters;
 
 import java.util.List;
 
-@Database(entities = {TermEntity.class, CourseEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class TrackerRoomDatabase extends RoomDatabase {
 
     public abstract TermDao termDao();
     public abstract CourseDao courseDao();
+    public abstract AssessmentDao assessmentDao();
 
     private static volatile TrackerRoomDatabase INSTANCE;
 
@@ -56,14 +59,21 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
         private final TermDao termDao;
         private final CourseDao courseDao;
+        private final AssessmentDao assessmentDao;
 
         private PopulateDbAsync(TrackerRoomDatabase db) {
             termDao = db.termDao();
             courseDao = db.courseDao();
+            assessmentDao = db.assessmentDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+
+            ////////////////////
+            // POPULATE TERMS //
+            ////////////////////
+
             termDao.deleteAllTerms();
 
             TermEntity term1 = new TermEntity(
@@ -86,6 +96,10 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
 
             termDao.insert(term3);
 
+            //////////////////////
+            // POPULATE COURSES //
+            //////////////////////
+
             TermEntity[] terms = termDao.loadAllTerms();
 
             courseDao.deleteAllCourses();
@@ -103,17 +117,39 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
             courseDao.insert(course1);
 
             courseDao.insert(new CourseEntity(
-                    terms[1].getTermID(),
+                    terms[0].getTermID(),
                     "Course 2",
                     new GregorianCalendar(2020, Calendar.APRIL, 15).getTime(),
                     new GregorianCalendar(2020, Calendar.MAY, 30).getTime(),
                     "Enrolled"));
             courseDao.insert(new CourseEntity(
-                    terms[2].getTermID(),
+                    terms[0].getTermID(),
                     "Course 3",
                     new GregorianCalendar(2020, Calendar.JUNE, 1).getTime(),
                     new GregorianCalendar(2020, Calendar.JULY, 15).getTime(),
                     "Enrolled"));
+
+            //////////////////////////
+            // POPULATE ASSESSMENTS //
+            //////////////////////////
+
+            CourseEntity[] courses = courseDao.loadAllCourses();
+
+            assessmentDao.deleteAllAssessments();
+
+            AssessmentEntity assessment1 = new AssessmentEntity(
+                    courses[0].getCourseID(),
+                    "Assessment 1",
+                    "Performance",
+                    new GregorianCalendar(2020, Calendar.MARCH, 30).getTime());
+            assessmentDao.insert(assessment1);
+
+            AssessmentEntity assessment2 = new AssessmentEntity(
+                    courses[0].getCourseID(),
+                    "Assessment 2",
+                    "Objective",
+                    new GregorianCalendar(2020, Calendar.APRIL, 1).getTime());
+            assessmentDao.insert(assessment2);
 
             return null;
         }
