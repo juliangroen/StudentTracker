@@ -2,8 +2,79 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityAssessmentAddEdit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.assessment.AssessmentAddEditActivity">
+
+    <EditText
+        android:id="@+id/editAssessmentTitle"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:gravity="center_horizontal"
+        android:hint="@string/hint_enter_tile"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearAssessmentType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/editAssessmentTitle">
+
+        <TextView
+            android:id="@+id/labelAssessmentType"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_padding"
+            android:gravity="center_horizontal"
+            android:text="@string/label_assessment_type"/>
+
+        <Spinner
+            android:id="@+id/spinnerAssessmentType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/large_padding"
+            android:gravity="center_horizontal"
+            android:spinnerMode="dropdown"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/labelAssessmentDueDate"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:gravity="center_horizontal"
+        android:text="@string/label_assessment_due_date"
+        app:layout_constraintTop_toBottomOf="@+id/linearAssessmentType" />
+
+    <DatePicker
+        android:id="@+id/dateAssessmentDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        app:layout_constraintTop_toBottomOf="@+id/labelAssessmentDueDate" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAssessmentSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_padding"
+        android:src="@drawable/ic_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

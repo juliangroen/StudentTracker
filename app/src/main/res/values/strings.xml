@@ -32,4 +32,11 @@
     <string name="hint_instructor_number">Enter Instructor Phone Number</string>
     <string name="hint_instructor_email">Enter Instructor Email</string>
     <string name="label_course_assessments">Assessments:</string>
+    <string name="label_assessment_type">Type:</string>
+    <string name="label_assessment_due_date">Due Date:</string>
+
+    <string-array name="assessment_type_array">
+        <item>Performance</item>
+        <item>Objective</item>
+    </string-array>
 </resources>

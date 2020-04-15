@@ -24,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentAdapter;
+import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentAddEditActivity;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentDetailsActivity;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentViewModel;
@@ -46,7 +47,6 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
     public static final String EXTRA_COURSE_INSTRUCTOR_NAME = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NAME";
     public static final String EXTRA_COURSE_INSTRUCTOR_NUMBER = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NUMBER";
     public static final String EXTRA_COURSE_INSTRUCTOR_EMAIL = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_EMAIL";
-    public static final String EXTRA_ASSESSMENT_OBJECT = "com.jgroen.juliangroenstudenttracker.EXTRA_ASSESSMENT_OBJECT";
 
     private TextView textCourseDetailTitle;
     private TextView textCourseDetailDates;
@@ -143,6 +143,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
             if (requestCode == EDIT_COURSE_REQUEST_CODE) {
                 setData(data);
                 Snackbar.make(findViewById(R.id.activityCourseDetails), "Course Updated!", Snackbar.LENGTH_SHORT).show();
+            } else if (requestCode == AssessmentDetailsActivity.ADD_ASSESSMENT_REQUEST_CODE) {
+
             } else {
                 setData(getIntent());
             }
@@ -150,6 +152,12 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
     }
 
     private void addAssessment() {
+        Intent prevIntent = getIntent();
+        int courseID = prevIntent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_ID, -1);
+
+        Intent intent = new Intent(CourseDetailsActivity.this, AssessmentAddEditActivity.class);
+        intent.putExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_COURSE_ID, courseID);
+        startActivityForResult(intent, AssessmentDetailsActivity.ADD_ASSESSMENT_REQUEST_CODE);
     }
 
     private void setData(Intent intent) {
@@ -175,7 +183,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
     @Override
     public void onItemClicked(AssessmentEntity assessment) {
         Intent intent = new Intent(CourseDetailsActivity.this, AssessmentDetailsActivity.class);
-        intent.putExtra(EXTRA_ASSESSMENT_OBJECT, assessment);
+        intent.putExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT, assessment);
         startActivity(intent);
     }
 
