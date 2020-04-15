@@ -1,16 +1,20 @@
 package com.jgroen.juliangroenstudenttracker.features.assessment;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseDetailsActivity;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
@@ -25,6 +29,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     private TextView textAssessmentDetailTitle;
     private TextView textAssessmentDetailType;
     private TextView textAssessmentDetailDueDate;
+    private AssessmentViewModel assessmentViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         textAssessmentDetailTitle = findViewById(R.id.textAssessmentDetailTitle);
         textAssessmentDetailType = findViewById(R.id.textAssessmentDetailType);
         textAssessmentDetailDueDate = findViewById(R.id.textAssessmentDetailDueDate);
+        assessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
 
         Intent intent = getIntent();
 
@@ -70,8 +76,27 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == EDIT_ASSESSMENT_REQUEST_CODE) {
+                AssessmentEntity assessment = (AssessmentEntity)data.getSerializableExtra(
+                        EXTRA_ASSESSMENT_OBJECT);
+                Log.d("ASSID", String.valueOf(assessment.getAssessmentID()));
+                assessmentViewModel.update(assessment);
+                setData(data);
+
+                Snackbar.make(findViewById(R.id.activityAssessmentDetails), "Assessment Updated!", Snackbar.LENGTH_SHORT).show();
+            } else {
+                setData(getIntent());
+            }
+        }
+    }
+
     private void setData(Intent intent) {
-        AssessmentEntity assessment = (AssessmentEntity)intent.getSerializableExtra(
+        AssessmentEntity assessment = (AssessmentEntity) intent.getSerializableExtra(
                 EXTRA_ASSESSMENT_OBJECT);
 
         String dueDate = TrackerUtilities.longToDateString(assessment.getAssessmentDueDate().getTime());

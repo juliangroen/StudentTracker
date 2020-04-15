@@ -15,6 +15,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgroen.juliangroenstudenttracker.R;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class AssessmentAddEditActivity extends AppCompatActivity {
 
     private EditText editAssessmentTitle;
@@ -63,7 +66,7 @@ public class AssessmentAddEditActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fabAssessmentSave);
         fab.setOnClickListener(view -> {
-            saveAssessment();
+            saveAssessment(intent, adapter);
         });
     }
 
@@ -75,6 +78,32 @@ public class AssessmentAddEditActivity extends AppCompatActivity {
         return true;
     }
 
-    private void saveAssessment() {
+    private void saveAssessment(Intent intent, ArrayAdapter<CharSequence> adapter) {
+        String title = editAssessmentTitle.getText().toString();
+        int position = spinnerAssessmentType.getSelectedItemPosition();
+        String type = adapter.getItem(position).toString();
+        Date dueDate = new GregorianCalendar(
+                dateAssessmentDueDate.getYear(),
+                dateAssessmentDueDate.getMonth(),
+                dateAssessmentDueDate.getDayOfMonth()
+        ).getTime();
+
+        AssessmentEntity newAssessment = new AssessmentEntity(-1, title, type, dueDate);
+        if (intent.hasExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT)) {
+            AssessmentEntity assessment = (AssessmentEntity)intent.getSerializableExtra(
+                    AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT);
+
+            newAssessment.setCourseID(assessment.getCourseID());
+            newAssessment.setAssessmentID(assessment.getAssessmentID());
+        } else if (intent.hasExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_COURSE_ID)){
+            int courseID = intent.getIntExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_COURSE_ID, -1);
+
+            newAssessment.setCourseID(courseID);
+        }
+
+        Intent data = new Intent();
+        data.putExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT, newAssessment);
+        setResult(RESULT_OK, data);
+        finish();
     }
 }

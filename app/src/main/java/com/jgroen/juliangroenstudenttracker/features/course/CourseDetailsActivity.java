@@ -144,7 +144,13 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
                 setData(data);
                 Snackbar.make(findViewById(R.id.activityCourseDetails), "Course Updated!", Snackbar.LENGTH_SHORT).show();
             } else if (requestCode == AssessmentDetailsActivity.ADD_ASSESSMENT_REQUEST_CODE) {
+                AssessmentEntity assessment = (AssessmentEntity)data.getSerializableExtra(
+                        AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT);
 
+                assessmentViewModel.insert(assessment);
+                setData(data);
+
+                Snackbar.make(findViewById(R.id.activityCourseDetails), "Assessment Added!", Snackbar.LENGTH_SHORT).show();
             } else {
                 setData(getIntent());
             }
