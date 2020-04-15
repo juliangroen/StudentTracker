@@ -104,7 +104,6 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
             } else if (requestCode == DELETE_TERM_REQUEST_CODE) {
                 if (data.hasExtra(EXTRA_NUM_COURSE)) {
                     if (data.getIntExtra(EXTRA_NUM_COURSE, -1) == 0) {
-                        //termViewModel.delete(currentTerm);
                         termViewModel.delete((TermEntity)data.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ));
                         Snackbar.make(findViewById(R.id.activityTerm), "Term Deleted!", Snackbar.LENGTH_SHORT).show();
                     } else {
@@ -148,7 +147,6 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
 
                             intent.putExtra(EXTRA_DELETE_FLAG, true);
                             startActivityForResult(intent, DELETE_TERM_REQUEST_CODE);
-                            overridePendingTransition(0, 0);
 
                         }
                     }

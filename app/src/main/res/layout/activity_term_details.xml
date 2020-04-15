@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activityTermDetails"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".features.term.TermDetailsActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textTermDetailTitle"
-        style="@style/TextAppearance.AppCompat.Headline"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="@dimen/large_padding"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Test"/>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/textTermDetailDates"
-        style="@style/TextAppearance.AppCompat.Headline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="@dimen/large_padding"
-        app:layout_constraintTop_toBottomOf="@id/textTermDetailTitle"
-        android:text="01/01/2020 to 06/30/2020"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activityTermDetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".features.term.TermDetailsActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/courseRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_padding"
-        app:layout_constraintTop_toBottomOf="@id/textTermDetailDates"
-        tools:listitem="@layout/course_list_item"/>
+            <TextView
+                android:id="@+id/textTermDetailTitle"
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:text="Test"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textTermDetailDates"
+                style="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:text="01/01/2020 to 06/30/2020"
+                app:layout_constraintTop_toBottomOf="@id/textTermDetailTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/courseRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                app:layout_constraintTop_toBottomOf="@id/textTermDetailDates"
+                tools:listitem="@layout/course_list_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCourseAdd"
@@ -41,8 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_padding"
         android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         app:maxImageSize="32dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

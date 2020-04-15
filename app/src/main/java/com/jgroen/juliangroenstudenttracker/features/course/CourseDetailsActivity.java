@@ -148,7 +148,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
                         AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT);
 
                 assessmentViewModel.insert(assessment);
-                setData(data);
+                setData(getIntent());
 
                 Snackbar.make(findViewById(R.id.activityCourseDetails), "Assessment Added!", Snackbar.LENGTH_SHORT).show();
             } else {
