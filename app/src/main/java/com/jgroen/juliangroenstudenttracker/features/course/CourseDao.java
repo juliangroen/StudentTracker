@@ -8,9 +8,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
-
 import java.util.List;
 
 @Dao

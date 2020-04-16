@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jgroen.juliangroenstudenttracker">
+    package="com.jgroen.juliangroenstudenttracker"
+    >
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,7 @@
         <receiver
             android:name=".utils.TrackerReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true"/>
 
         <activity android:name=".features.term.TermActivity">
             <intent-filter>

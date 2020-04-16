@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentDao;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.features.course.CourseDao;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.features.term.TermDao;
 import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
 

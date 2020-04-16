@@ -1,31 +1,21 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
-import androidx.annotation.NonNull;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.app.Application;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.AdapterView;
-import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
-import com.jgroen.juliangroenstudenttracker.database.TrackerRepository;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseViewModel;
 
 import java.util.Date;
 import java.util.List;

@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgroen.juliangroenstudenttracker.R;
-import com.jgroen.juliangroenstudenttracker.features.term.TermAdapter;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
 import java.util.List;

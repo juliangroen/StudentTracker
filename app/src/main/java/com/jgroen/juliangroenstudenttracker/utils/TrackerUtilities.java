@@ -1,13 +1,5 @@
 package com.jgroen.juliangroenstudenttracker.utils;
 
-import android.util.Log;
-
-import androidx.lifecycle.ViewModelProvider;
-
-import com.jgroen.juliangroenstudenttracker.features.course.CourseViewModel;
-import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
-import com.jgroen.juliangroenstudenttracker.features.term.TermViewModel;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

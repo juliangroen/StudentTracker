@@ -1,23 +1,20 @@
 package com.jgroen.juliangroenstudenttracker.features.assessment;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.jgroen.juliangroenstudenttracker.R;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseDetailsActivity;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
 public class AssessmentDetailsActivity extends AppCompatActivity {
@@ -83,9 +80,8 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_ASSESSMENT_REQUEST_CODE) {
-                AssessmentEntity assessment = (AssessmentEntity)data.getSerializableExtra(
+                AssessmentEntity assessment = (AssessmentEntity) data.getSerializableExtra(
                         EXTRA_ASSESSMENT_OBJECT);
-                Log.d("ASSID", String.valueOf(assessment.getAssessmentID()));
                 assessmentViewModel.update(assessment);
                 setData(data);
 

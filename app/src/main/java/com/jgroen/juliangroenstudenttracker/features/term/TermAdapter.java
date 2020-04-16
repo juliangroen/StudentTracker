@@ -1,31 +1,18 @@
 package com.jgroen.juliangroenstudenttracker.features.term;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgroen.juliangroenstudenttracker.R;
-import com.jgroen.juliangroenstudenttracker.database.TrackerRepository;
-import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {

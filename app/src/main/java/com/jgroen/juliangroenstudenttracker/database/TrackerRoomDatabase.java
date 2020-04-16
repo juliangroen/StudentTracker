@@ -2,12 +2,9 @@ package com.jgroen.juliangroenstudenttracker.database;
 
 import android.content.Context;
 import android.icu.util.GregorianCalendar;
-import android.icu.util.TimeUnit;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -23,14 +20,7 @@ import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
 import com.jgroen.juliangroenstudenttracker.utils.Converters;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
-import java.time.MonthDay;
-import java.time.YearMonth;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 @Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
