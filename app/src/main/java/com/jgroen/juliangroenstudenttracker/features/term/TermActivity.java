@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -99,15 +100,15 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
                 TermEntity term = new TermEntity(title, startDate, endDate);
                 termViewModel.insert(term);
 
-                Snackbar.make(findViewById(R.id.activityTerm), "Term Saved!", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(this, "Term Saved!", Toast.LENGTH_SHORT).show();
 
             } else if (requestCode == DELETE_TERM_REQUEST_CODE) {
                 if (data.hasExtra(EXTRA_NUM_COURSE)) {
                     if (data.getIntExtra(EXTRA_NUM_COURSE, -1) == 0) {
                         termViewModel.delete((TermEntity)data.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ));
-                        Snackbar.make(findViewById(R.id.activityTerm), "Term Deleted!", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Term Deleted!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Snackbar.make(findViewById(R.id.activityTerm), "Can't delete Term with linked courses!", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Can't delete a Term with linked courses!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

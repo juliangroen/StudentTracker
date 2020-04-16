@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -105,7 +106,7 @@ public class CourseAddEditActivity extends AppCompatActivity {
         String email = textInstructorEmail.getText().toString();
 
         if (title.trim().isEmpty()) {
-            Snackbar.make(findViewById(R.id.activityCourseAddEdit), "Please insert a title", Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please insert a title", Toast.LENGTH_SHORT).show();
             return;
         }
 

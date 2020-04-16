@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
     private TextView textCourseDetailDates;
     private TextView textCourseDetailStatus;
     private TextView textCourseDetailNote;
+    private ImageButton iconCourseDetailNote;
     private TextView textCourseInstructorName;
     private TextView textCourseInstructorNumber;
     private TextView textCourseInstructorEmail;
@@ -72,6 +74,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
         textCourseDetailDates = findViewById(R.id.textCourseDetailDates);
         textCourseDetailStatus = findViewById(R.id.textCourseDetailStatus);
         textCourseDetailNote = findViewById(R.id.textCourseDetailNote);
+        iconCourseDetailNote = findViewById(R.id.iconCourseDetailNote);
         textCourseInstructorName = findViewById(R.id.textCourseInstructorName);
         textCourseInstructorNumber = findViewById(R.id.textCourseInstructorNumber);
         textCourseInstructorEmail = findViewById(R.id.textCourseInstructorEmail);
@@ -104,6 +107,17 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
                 }
                 adapter.setAssessments(assessmentList);
             }
+        });
+
+        iconCourseDetailNote.setOnClickListener(view -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, textCourseDetailNote.getText());
+            sendIntent.putExtra(Intent.EXTRA_TITLE, "Notes from " + textCourseDetailTitle.getText());
+            sendIntent.setType("text/plain");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
         });
     }
 
@@ -147,7 +161,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_COURSE_REQUEST_CODE) {
                 setData(data);
-                Snackbar.make(findViewById(R.id.activityCourseDetails), "Course Updated!", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(this, "Couse Updated!", Toast.LENGTH_SHORT).show();
             } else if (requestCode == AssessmentDetailsActivity.ADD_ASSESSMENT_REQUEST_CODE) {
                 AssessmentEntity assessment = (AssessmentEntity) data.getSerializableExtra(
                         AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT);
@@ -155,7 +169,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
                 assessmentViewModel.insert(assessment);
                 setData(getIntent());
 
-                Snackbar.make(findViewById(R.id.activityCourseDetails), "Assessment Added!", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(this, "Assessment Added!", Toast.LENGTH_SHORT).show();
             } else {
                 setData(getIntent());
             }

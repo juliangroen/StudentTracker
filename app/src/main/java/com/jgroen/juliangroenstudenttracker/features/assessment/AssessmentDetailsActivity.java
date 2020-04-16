@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.jgroen.juliangroenstudenttracker.R;
@@ -88,7 +89,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
                 assessmentViewModel.update(assessment);
                 setData(data);
 
-                Snackbar.make(findViewById(R.id.activityAssessmentDetails), "Assessment Updated!", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(this, "Assessment Updated!", Toast.LENGTH_SHORT).show();
             } else {
                 setData(getIntent());
             }

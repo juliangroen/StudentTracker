@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -112,7 +113,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
             if (requestCode == TermActivity.EDIT_TERM_REQUEST_CODE) {
                 setData(data);
-                Snackbar.make(findViewById(R.id.activityTermDetails), "Term Updated!", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(this, "Term Updated!", Toast.LENGTH_SHORT).show();
 
             } else if (requestCode == CourseDetailsActivity.ADD_COURSE_REQUEST_CODE) {
                 int termID = data.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1);
@@ -135,7 +136,7 @@ public class TermDetailsActivity extends AppCompatActivity {
                 course.setCourseInstructorEmail(email);
                 courseViewModel.insert(course);
 
-                Snackbar.make(findViewById(R.id.activityTermDetails), "Course Saved!", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(this, "Course Saved!", Toast.LENGTH_SHORT).show();
             }
 
         } else {

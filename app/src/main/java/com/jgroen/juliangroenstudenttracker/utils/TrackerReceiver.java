@@ -27,7 +27,7 @@ public class TrackerReceiver extends BroadcastReceiver {
         Notification notification = new NotificationCompat.Builder(context, channelID)
                 .setSmallIcon(R.drawable.ic_sentiment_very_satisfied)
                 .setContentText(intent.getStringExtra(EXTRA_NOTIFICATION_CONTENT))
-                .setContentTitle(context.getString(R.string.app_name) + notificationID)
+                .setContentTitle(context.getString(R.string.app_name))
                 .build();
 
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
