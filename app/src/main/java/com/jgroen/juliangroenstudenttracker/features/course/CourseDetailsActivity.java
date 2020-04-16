@@ -8,7 +8,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -19,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,6 +32,7 @@ import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentAddEdi
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentDetailsActivity;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentEntity;
 import com.jgroen.juliangroenstudenttracker.features.assessment.AssessmentViewModel;
+import com.jgroen.juliangroenstudenttracker.utils.TrackerReceiver;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
 import java.util.ArrayList;
@@ -144,7 +149,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
                 setData(data);
                 Snackbar.make(findViewById(R.id.activityCourseDetails), "Course Updated!", Snackbar.LENGTH_SHORT).show();
             } else if (requestCode == AssessmentDetailsActivity.ADD_ASSESSMENT_REQUEST_CODE) {
-                AssessmentEntity assessment = (AssessmentEntity)data.getSerializableExtra(
+                AssessmentEntity assessment = (AssessmentEntity) data.getSerializableExtra(
                         AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT);
 
                 assessmentViewModel.insert(assessment);
@@ -195,16 +200,37 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
 
     @Override
     public void onItemLongClicked(AssessmentEntity assessment) {
-        String[] options = {"Delete Assessment", "Cancel"};
+        String[] options = {"Create Notification for Due Date",
+                "Delete Assessment",
+                "Cancel"};
 
         new AlertDialog.Builder(this)
                 .setTitle("Choose an option")
                 .setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         if (which == 0) {
+                            // Create Notification for Start Date
+                            Intent intent = new Intent(CourseDetailsActivity.this, TrackerReceiver.class);
+                            String content = assessment.getAssessmentTitle() + "'s due date is today!";
+                            intent.putExtra(TrackerReceiver.EXTRA_NOTIFICATION_CONTENT, content);
+
+                            PendingIntent sender = PendingIntent.getBroadcast(
+                                    CourseDetailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            AlarmManager alarmManager = (AlarmManager) CourseDetailsActivity.this.getSystemService(
+                                    Context.ALARM_SERVICE);
+
+                            alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                    assessment.getAssessmentDueDate().getTime(), sender);
+                            Toast.makeText(getApplicationContext(), "Notification created!", Toast.LENGTH_SHORT).show();
+
+                        } else if (which == 1) {
+                            // Delete Assessment
                             assessmentViewModel.delete(assessment);
-                            Snackbar.make(findViewById(R.id.activityCourseDetails), "Assessment Deleted!", Snackbar.LENGTH_SHORT).show();
+                            //Toast.makeText(CourseDetailsActivity.this, "Assessment Deleted!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Assessment Deleted!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).show();

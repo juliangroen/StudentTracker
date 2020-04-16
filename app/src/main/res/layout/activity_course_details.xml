@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginBottom="@dimen/large_padding"
                 android:gravity="center_horizontal"
                 android:text="01/01/2020 to 02/15/2020"
                 app:layout_constraintTop_toBottomOf="@id/textCourseDetailStatus" />
@@ -64,26 +65,54 @@
                 app:layout_constraintTop_toBottomOf="@+id/labelCourseDetailAssessments"
                 tools:listitem="@layout/assessment_list_item" />
 
-            <TextView
-                android:id="@+id/labelCourseDetailNote"
-                style="@style/TextAppearance.AppCompat.Large"
+
+            <LinearLayout
+                android:id="@+id/linearCourseDetailNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginStart="@dimen/large_padding"
+                android:layout_marginEnd="@dimen/large_padding"
+                android:paddingTop="@dimen/large_padding"
                 android:gravity="center_horizontal"
-                android:text="@string/label_course_note"
-                app:layout_constraintTop_toBottomOf="@id/assessmentRecyclerView" />
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/assessmentRecyclerView">
+
+
+                <TextView
+                    android:id="@+id/labelCourseDetailNote"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/large_padding"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/label_course_note"/>
+
+                <ImageButton
+                    android:id="@+id/iconCourseDetailNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="?android:selectableItemBackground"
+                    android:contentDescription="@string/desc_share_icon"
+                    android:src="@drawable/ic_share" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textCourseDetailNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/large_padding"
                 android:layout_marginTop="@dimen/large_padding"
+                android:layout_marginStart="@dimen/large_padding"
                 android:layout_marginEnd="@dimen/large_padding"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:background="@color/cardview_dark_background"
                 android:padding="@dimen/large_padding"
-                app:layout_constraintTop_toBottomOf="@id/labelCourseDetailNote" />
+                app:layout_constraintTop_toBottomOf="@+id/linearCourseDetailNote"
+                />
 
             <TextView
                 android:id="@+id/labelCourseInstructor"
@@ -132,10 +161,10 @@
         android:id="@+id/fabAssessmentAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/large_padding"
         android:src="@drawable/ic_add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         app:maxImageSize="32dp" />
 
 </RelativeLayout>

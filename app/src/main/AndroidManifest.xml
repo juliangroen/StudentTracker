@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".utils.TrackerReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
 
         <activity android:name=".features.term.TermActivity">
             <intent-filter>
@@ -17,37 +21,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".features.assessment.AssessmentDetailsActivity"
             android:label="@string/activity_assessment_detail_title"
             android:parentActivityName=".features.course.CourseDetailsActivity" />
-
         <activity
             android:name=".features.assessment.AssessmentAddEditActivity"
             android:label="@string/activity_assessment_add_title"
             android:parentActivityName=".features.assessment.AssessmentDetailsActivity" />
-
         <activity
             android:name=".features.course.CourseDetailsActivity"
             android:label="@string/activity_course_detail_title"
             android:parentActivityName=".features.term.TermDetailsActivity" />
-
         <activity
             android:name=".features.course.CourseAddEditActivity"
             android:label="@string/activity_course_add_title"
             android:parentActivityName=".features.course.CourseDetailsActivity" />
-
         <activity
             android:name=".features.term.TermDetailsActivity"
             android:label="@string/activity_term_detail_title"
             android:parentActivityName=".features.term.TermActivity" />
-
         <activity
             android:name=".features.term.TermAddEditActivity"
             android:label="@string/activity_term_add_title"
             android:parentActivityName=".features.term.TermDetailsActivity" />
-
     </application>
 
 </manifest>

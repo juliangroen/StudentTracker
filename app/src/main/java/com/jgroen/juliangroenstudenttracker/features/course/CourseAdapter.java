@@ -1,6 +1,8 @@
 package com.jgroen.juliangroenstudenttracker.features.course;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,11 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgroen.juliangroenstudenttracker.R;
+import com.jgroen.juliangroenstudenttracker.features.term.TermDetailsActivity;
+import com.jgroen.juliangroenstudenttracker.utils.TrackerReceiver;
 
 import java.util.List;
 
@@ -88,15 +93,56 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.itemView.setOnLongClickListener(view -> {
 
             //termViewModel.delete(terms.get(position));
-            String[] options = {"Delete Course", "Cancel"};
+            String[] options = {"Create Notification for Start Date",
+                    "Create Notification for End Date",
+                    "Delete Course",
+                    "Cancel"};
 
             new AlertDialog.Builder(context)
                     .setTitle("Choose an option")
                     .setItems(options, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
+                            CourseEntity current = courses.get(position);
+
+
                             if (which == 0) {
-                                courseViewModel.delete(courses.get(position));
+                                // Create Notification for Start Date
+                                Intent intent = new Intent(context, TrackerReceiver.class);
+                                String content = current.getCourseTitle() + " is starting today!";
+                                intent.putExtra(TrackerReceiver.EXTRA_NOTIFICATION_CONTENT, content);
+
+                                PendingIntent sender = PendingIntent.getBroadcast(
+                                        context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                AlarmManager alarmManager = (AlarmManager) context.getSystemService(
+                                        Context.ALARM_SERVICE);
+
+                                alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                        current.getCourseStartDate().getTime(), sender);
+                                Toast.makeText(context, "Notification created!", Toast.LENGTH_SHORT).show();
+
+                            } else if (which == 1) {
+                                // Create Notification for End Date
+
+                                Intent intent = new Intent(context, TrackerReceiver.class);
+                                String content = current.getCourseTitle() + " is ending today!";
+                                intent.putExtra(TrackerReceiver.EXTRA_NOTIFICATION_CONTENT, content);
+
+                                PendingIntent sender = PendingIntent.getBroadcast(
+                                        context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                AlarmManager alarmManager = (AlarmManager) context.getSystemService(
+                                        Context.ALARM_SERVICE);
+
+                                alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                        current.getCourseEndDate().getTime(), sender);
+                                Toast.makeText(context, "Notification created!", Toast.LENGTH_SHORT).show();
+                            } else if (which == 2) {
+                                //Delete Course
+                                courseViewModel.delete(current);
+                                Toast.makeText(context, "Course deleted!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }).show();

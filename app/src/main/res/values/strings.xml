@@ -22,7 +22,7 @@
 
     <string name="detail_dates">%1$s to %2$s</string>
     <string name="hint_enter_status">Enter a status</string>
-    <string name="label_course_note">Course Note:</string>
+    <string name="label_course_note">Course Notes </string>
     <string name="label_instructor">Instructor:</string>
     <string name="course_instructor_name">Name: %1$s</string>
     <string name="course_instructor_Number">Phone: %1$s</string>
@@ -34,6 +34,10 @@
     <string name="label_course_assessments">Assessments:</string>
     <string name="label_assessment_type">Type:</string>
     <string name="label_assessment_due_date">Due Date:</string>
+
+    <string name="channel_name">Tracker Notifications</string>
+    <string name="channel_description">Notification channel for the Student Tracker</string>
+    <string name="desc_share_icon">share icon</string>
 
     <string-array name="assessment_type_array">
         <item>Performance</item>
