@@ -152,7 +152,6 @@
                 android:paddingBottom="@dimen/large_padding"
                 app:layout_constraintTop_toBottomOf="@id/textCourseInstructorNumber" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

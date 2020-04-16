@@ -1,8 +1,8 @@
 package com.jgroen.juliangroenstudenttracker.database;
 
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.icu.util.TimeUnit;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -21,7 +21,15 @@ import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.features.term.TermDao;
 import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
 import com.jgroen.juliangroenstudenttracker.utils.Converters;
+import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
+import java.time.MonthDay;
+import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, version = 1, exportSchema = false)
@@ -70,6 +78,8 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
 
+            int counter = 0;
+
             ////////////////////
             // POPULATE TERMS //
             ////////////////////
@@ -104,30 +114,49 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
 
             courseDao.deleteAllCourses();
 
-            CourseEntity course1 = new CourseEntity(
-                    terms[0].getTermID(),
-                    "Course 1",
-                    new GregorianCalendar(2020, Calendar.MARCH, 1).getTime(),
-                    new GregorianCalendar(2020, Calendar.APRIL, 15).getTime(),
-                    "In Progress");
-            course1.setCourseNote("lorem ipsum");
-            course1.setCourseInstructorName("Takumi Fujiwara");
-            course1.setCourseInstructorNumber("385-428-1000");
-            course1.setCourseInstructorEmail("takumi@fujiwaratofu.co.jp");
-            courseDao.insert(course1);
+            for (TermEntity term: terms) {
 
-            courseDao.insert(new CourseEntity(
-                    terms[0].getTermID(),
-                    "Course 2",
-                    new GregorianCalendar(2020, Calendar.APRIL, 15).getTime(),
-                    new GregorianCalendar(2020, Calendar.MAY, 30).getTime(),
-                    "Enrolled"));
-            courseDao.insert(new CourseEntity(
-                    terms[0].getTermID(),
-                    "Course 3",
-                    new GregorianCalendar(2020, Calendar.JUNE, 1).getTime(),
-                    new GregorianCalendar(2020, Calendar.JULY, 15).getTime(),
-                    "Enrolled"));
+                counter++;
+
+                Calendar startCal = TrackerUtilities.longToCalendar(term.getTermStartDate().getTime());
+                Calendar endCal = TrackerUtilities.longToCalendar(term.getTermStartDate().getTime());
+                endCal.add(Calendar.MONTH, 1);
+                endCal.add(Calendar.DAY_OF_MONTH, -1);
+                CourseEntity course = new CourseEntity(
+                        term.getTermID(),
+                        "C" + (100 * counter),
+                        startCal.getTime(),
+                        endCal.getTime(),
+                        "In Progress"
+                );
+                courseDao.insert(course);
+
+                startCal.add(Calendar.MONTH, 1);
+                endCal.add(Calendar.DAY_OF_MONTH, 1);
+                endCal.add(Calendar.MONTH, 1);
+                endCal.add(Calendar.DAY_OF_MONTH, -1);
+                course = new CourseEntity(
+                        term.getTermID(),
+                        "C" + ((100 * counter) + 1),
+                        startCal.getTime(),
+                        endCal.getTime(),
+                        "Enrolled"
+                );
+                courseDao.insert(course);
+
+                startCal.add(Calendar.MONTH, 1);
+                endCal.add(Calendar.DAY_OF_MONTH, 1);
+                endCal.add(Calendar.MONTH, 1);
+                endCal.add(Calendar.DAY_OF_MONTH, -1);
+                course = new CourseEntity(
+                        term.getTermID(),
+                        "C" + ((100 * counter) + 2),
+                        startCal.getTime(),
+                        endCal.getTime(),
+                        "Enrolled"
+                );
+                courseDao.insert(course);
+            }
 
             //////////////////////////
             // POPULATE ASSESSMENTS //
@@ -137,26 +166,24 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
 
             assessmentDao.deleteAllAssessments();
 
-            AssessmentEntity assessment1 = new AssessmentEntity(
-                    courses[0].getCourseID(),
-                    "Assessment 1",
-                    "Performance",
-                    new GregorianCalendar(2020, Calendar.MARCH, 30).getTime());
-            assessmentDao.insert(assessment1);
+            for (CourseEntity course: courses) {
 
-            AssessmentEntity assessment2 = new AssessmentEntity(
-                    courses[0].getCourseID(),
-                    "Assessment 2",
-                    "Objective",
-                    new GregorianCalendar(2020, Calendar.APRIL, 1).getTime());
-            assessmentDao.insert(assessment2);
+                Calendar cal = TrackerUtilities.longToCalendar(course.getCourseStartDate().getTime());
+                cal.add(Calendar.MONTH, 1);
+                cal.add(Calendar.DAY_OF_MONTH, -1);
+                AssessmentEntity assessment = new AssessmentEntity(
+                        course.getCourseID(),
+                        "Assessment 1",
+                        "Performance",
+                        cal.getTime());
+                assessmentDao.insert(assessment);
 
-            for (int i = 0; i < 6; i++) {
-                assessmentDao.insert(new AssessmentEntity(
-                        courses[0].getCourseID(),
-                        "Assessment " + (i + 3),
+                assessment = new AssessmentEntity(
+                        course.getCourseID(),
+                        "Assessment 2",
                         "Objective",
-                        new GregorianCalendar(2020, Calendar.APRIL, 1).getTime()));
+                        cal.getTime());
+                assessmentDao.insert(assessment);
             }
 
             return null;
