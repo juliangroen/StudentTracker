@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,6 +51,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
     public static final String EXTRA_COURSE_INSTRUCTOR_NAME = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NAME";
     public static final String EXTRA_COURSE_INSTRUCTOR_NUMBER = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_NUMBER";
     public static final String EXTRA_COURSE_INSTRUCTOR_EMAIL = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_INSTRUCTOR_EMAIL";
+    public static final String EXTRA_COURSE_OBJECT = "com.jgroen.juliangroenstudenttracker.EXTRA_COURSE_OBJECT";
 
     private TextView textCourseDetailTitle;
     private TextView textCourseDetailDates;
@@ -60,6 +62,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
     private TextView textCourseInstructorNumber;
     private TextView textCourseInstructorEmail;
 
+    private CourseViewModel courseViewModel;
     private AssessmentViewModel assessmentViewModel;
 
     @Override
@@ -76,6 +79,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
         textCourseInstructorNumber = findViewById(R.id.textCourseInstructorNumber);
         textCourseInstructorEmail = findViewById(R.id.textCourseInstructorEmail);
 
+        courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
         assessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
 
         Intent intent = getIntent();
@@ -95,12 +99,18 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
         assessmentViewModel.getAllAssessments().observe(this, new Observer<List<AssessmentEntity>>() {
             @Override
             public void onChanged(List<AssessmentEntity> assessmentEntities) {
-                int courseID = intent.getIntExtra(EXTRA_COURSE_ID, -1);
+//                int courseID = intent.getIntExtra(EXTRA_COURSE_ID, -1);
+                CourseEntity course = (CourseEntity) intent.getSerializableExtra(EXTRA_COURSE_OBJECT);
+                int courseID = course.getCourseID();
+                Log.d("ASSMT", "courseID = " + courseID);
                 List<AssessmentEntity> assessmentList = new ArrayList<AssessmentEntity>();
                 for (AssessmentEntity assessment : assessmentEntities) {
                     if (courseID == assessment.getCourseID()) {
                         assessmentList.add(assessment);
                     }
+                }
+                for (AssessmentEntity item : assessmentList){
+                    Log.d("ASSMT", item.getAssessmentTitle());
                 }
                 adapter.setAssessments(assessmentList);
             }
@@ -139,16 +149,34 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
         if (item.getItemId() == R.id.menu_item_edit) {
 
             Intent firstIntent = getIntent();
+            int courseID = firstIntent.getIntExtra(EXTRA_COURSE_ID, -1);
             Intent intent = new Intent(CourseDetailsActivity.this, CourseAddEditActivity.class);
-            intent.putExtras(firstIntent);
+            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT,
+                    firstIntent.getSerializableExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT));
             startActivityForResult(intent, EDIT_COURSE_REQUEST_CODE);
-            return true;
+
+//            courseViewModel.getAllCourses().observe(this, new Observer<List<CourseEntity>>() {
+//                @Override
+//                public void onChanged(List<CourseEntity> courseEntities) {
+//                    for (CourseEntity course : courseEntities) {
+//                        if (courseID == course.getCourseID()) {
+//                            intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT, course);
+//                            startActivityForResult(intent, EDIT_COURSE_REQUEST_CODE);
+//                            return;
+//                        }
+//                    }
+//                    courseViewModel.getAllCourses().removeObserver(this);
+//                }
+//            });
+
 
         } else {
 
             return super.onOptionsItemSelected(item);
 
         }
+
+        return true;
     }
 
     @Override
@@ -157,14 +185,21 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
 
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_COURSE_REQUEST_CODE) {
-                setData(data);
-                Toast.makeText(this, "Couse Updated!", Toast.LENGTH_SHORT).show();
+//                CourseEntity course = (CourseEntity) data.getSerializableExtra(
+//                        CourseDetailsActivity.EXTRA_COURSE_OBJECT);
+//                courseViewModel.update(course);
+//                setData(data);
+                Toast.makeText(this, "Course Updated!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CourseDetailsActivity.this, CourseDetailsActivity.class);
+                intent.putExtras(data);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             } else if (requestCode == AssessmentDetailsActivity.ADD_ASSESSMENT_REQUEST_CODE) {
                 AssessmentEntity assessment = (AssessmentEntity) data.getSerializableExtra(
                         AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT);
 
                 assessmentViewModel.insert(assessment);
-                setData(getIntent());
+                setData(data);
 
                 Toast.makeText(this, "Assessment Added!", Toast.LENGTH_SHORT).show();
             } else {
@@ -175,31 +210,56 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
 
     private void addAssessment() {
         Intent prevIntent = getIntent();
-        int courseID = prevIntent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_ID, -1);
+//        int courseID = prevIntent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_ID, -1);
+        CourseEntity course = (CourseEntity) prevIntent.getSerializableExtra(EXTRA_COURSE_OBJECT);
+        int courseID = course.getCourseID();
 
         Intent intent = new Intent(CourseDetailsActivity.this, AssessmentAddEditActivity.class);
         intent.putExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_COURSE_ID, courseID);
+        intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT, course);
         startActivityForResult(intent, AssessmentDetailsActivity.ADD_ASSESSMENT_REQUEST_CODE);
     }
 
     private void setData(Intent intent) {
-        String startDate = TrackerUtilities.longToDateString(intent.getLongExtra(EXTRA_COURSE_START_DATE, -1));
-        String endDate = TrackerUtilities.longToDateString(intent.getLongExtra(EXTRA_COURSE_END_DATE, -1));
 
-        textCourseDetailTitle.setText(intent.getStringExtra(EXTRA_COURSE_TITLE));
+        CourseEntity course = (CourseEntity)intent.getSerializableExtra(EXTRA_COURSE_OBJECT);
+
+
+        String startDate = TrackerUtilities.longToDateString(course.getCourseStartDate().getTime());
+        String endDate = TrackerUtilities.longToDateString(course.getCourseEndDate().getTime());
+
+        textCourseDetailTitle.setText(course.getCourseTitle());
         textCourseDetailTitle.setTypeface(null, Typeface.BOLD);
-        textCourseDetailStatus.setText(intent.getStringExtra(EXTRA_COURSE_STATUS));
+        textCourseDetailStatus.setText(course.getCourseStatus());
         textCourseDetailDates.setText(getString(R.string.detail_dates, startDate, endDate));
-        textCourseDetailNote.setText(intent.getStringExtra(EXTRA_COURSE_NOTE));
+        textCourseDetailNote.setText(course.getCourseNote());
         textCourseInstructorName.setText(getString(R.string.course_instructor_name,
-                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NAME) != null)
-                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NAME) : ""));
+                (course.getCourseInstructorName() != null)
+                        ? course.getCourseInstructorName() : ""));
         textCourseInstructorNumber.setText(getString(R.string.course_instructor_Number,
-                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NUMBER) != null)
-                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NUMBER) : ""));
+                (course.getCourseInstructorNumber() != null)
+                        ? course.getCourseInstructorNumber() : ""));
         textCourseInstructorEmail.setText(getString(R.string.course_instructor_Email,
-                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) != null)
-                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) : ""));
+                (course.getCourseInstructorEmail() != null)
+                        ? course.getCourseInstructorEmail() : ""));
+
+//        String startDate = TrackerUtilities.longToDateString(intent.getLongExtra(EXTRA_COURSE_START_DATE, -1));
+//        String endDate = TrackerUtilities.longToDateString(intent.getLongExtra(EXTRA_COURSE_END_DATE, -1));
+//
+//        textCourseDetailTitle.setText(intent.getStringExtra(EXTRA_COURSE_TITLE));
+//        textCourseDetailTitle.setTypeface(null, Typeface.BOLD);
+//        textCourseDetailStatus.setText(intent.getStringExtra(EXTRA_COURSE_STATUS));
+//        textCourseDetailDates.setText(getString(R.string.detail_dates, startDate, endDate));
+//        textCourseDetailNote.setText(intent.getStringExtra(EXTRA_COURSE_NOTE));
+//        textCourseInstructorName.setText(getString(R.string.course_instructor_name,
+//                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NAME) != null)
+//                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NAME) : ""));
+//        textCourseInstructorNumber.setText(getString(R.string.course_instructor_Number,
+//                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NUMBER) != null)
+//                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_NUMBER) : ""));
+//        textCourseInstructorEmail.setText(getString(R.string.course_instructor_Email,
+//                (intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) != null)
+//                        ? intent.getStringExtra(EXTRA_COURSE_INSTRUCTOR_EMAIL) : ""));
     }
 
     @Override

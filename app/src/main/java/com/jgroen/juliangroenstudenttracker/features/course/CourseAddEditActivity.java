@@ -47,23 +47,41 @@ public class CourseAddEditActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_ID)) {
+        if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT)) {
             setTitle(R.string.activity_course_edit_title);
-            textCourseTitle.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE));
-            textCourseStatus.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS));
 
-            int[] startDateArray = TrackerUtilities.longToDateArray(
-                    intent.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, -1));
+            CourseEntity course = (CourseEntity)intent.getSerializableExtra(
+                    CourseDetailsActivity.EXTRA_COURSE_OBJECT);
 
-            int[] endDateArray = TrackerUtilities.longToDateArray(
-                    intent.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, -1));
+            textCourseTitle.setText(course.getCourseTitle());
+            textCourseStatus.setText(course.getCourseStatus());
+
+            int[] startDateArray = TrackerUtilities.longToDateArray(course.getCourseStartDate().getTime());
+
+            int[] endDateArray = TrackerUtilities.longToDateArray(course.getCourseEndDate().getTime());
 
             dateStartDate.updateDate(startDateArray[0], startDateArray[1], startDateArray[2]);
             dateEndDate.updateDate(endDateArray[0], endDateArray[1], endDateArray[2]);
-            textCourseNote.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_NOTE));
-            textInstructorName.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NAME));
-            textInstructorNumber.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NUMBER));
-            textInstructorEmail.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_EMAIL));
+            textCourseNote.setText(course.getCourseNote());
+            textInstructorName.setText(course.getCourseInstructorName());
+            textInstructorNumber.setText(course.getCourseInstructorNumber());
+            textInstructorEmail.setText(course.getCourseInstructorEmail());
+
+//            textCourseTitle.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE));
+//            textCourseStatus.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS));
+//
+//            int[] startDateArray = TrackerUtilities.longToDateArray(
+//                    intent.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, -1));
+//
+//            int[] endDateArray = TrackerUtilities.longToDateArray(
+//                    intent.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, -1));
+//
+//            dateStartDate.updateDate(startDateArray[0], startDateArray[1], startDateArray[2]);
+//            dateEndDate.updateDate(endDateArray[0], endDateArray[1], endDateArray[2]);
+//            textCourseNote.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_NOTE));
+//            textInstructorName.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NAME));
+//            textInstructorNumber.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NUMBER));
+//            textInstructorEmail.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_EMAIL));
         }
 
         FloatingActionButton fab = findViewById(R.id.fabCourseSave);
@@ -104,23 +122,39 @@ public class CourseAddEditActivity extends AppCompatActivity {
         String email = textInstructorEmail.getText().toString();
 
         if (title.trim().isEmpty()) {
-            Toast.makeText(this, "Please insert a title", Toast.LENGTH_SHORT).show();
+            if (status.trim().isEmpty()) {
+                Toast.makeText(this, "Please insert a title and status", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Please insert a title", Toast.LENGTH_SHORT).show();
+            }
             return;
+        } else if (status.trim().isEmpty()) {
+            Toast.makeText(this, "Please insert a status", Toast.LENGTH_SHORT).show();
         }
 
         Intent intent = getIntent();
 
-        if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_ID)) {
+        if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT)) {
 
-            CourseEntity course = new CourseEntity(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID,-1), title, startDate, endDate, status);
-            course.setCourseID(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_ID, -1));
+//            CourseEntity course = new CourseEntity(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1), title, startDate, endDate, status);
+//            course.setCourseID(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_ID, -1));
+            CourseEntity course = (CourseEntity)intent.getSerializableExtra(
+                    CourseDetailsActivity.EXTRA_COURSE_OBJECT);
+            course.setCourseTitle(title);
+            course.setCourseStartDate(startDate);
+            course.setCourseEndDate(endDate);
+            course.setCourseStatus(status);
             course.setCourseNote(note);
             course.setCourseInstructorName(name);
             course.setCourseInstructorNumber(number);
             course.setCourseInstructorEmail(email);
             courseViewModel.update(course);
+            Intent data = new Intent();
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT, course);
+            setResult(RESULT_OK, data);
+            finish();
 
-        }
+        } else {
 
         Intent data = new Intent();
         data.putExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1));
@@ -136,4 +170,6 @@ public class CourseAddEditActivity extends AppCompatActivity {
         finish();
 
     }
+
+}
 }

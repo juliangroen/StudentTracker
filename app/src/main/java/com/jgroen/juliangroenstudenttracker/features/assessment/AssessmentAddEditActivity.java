@@ -6,12 +6,15 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgroen.juliangroenstudenttracker.R;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseDetailsActivity;
+import com.jgroen.juliangroenstudenttracker.features.course.CourseEntity;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
 import java.util.Date;
@@ -100,7 +103,15 @@ public class AssessmentAddEditActivity extends AppCompatActivity {
             newAssessment.setCourseID(courseID);
         }
 
+        if (title.trim().isEmpty()) {
+            Toast.makeText(this, "Please insert a title", Toast.LENGTH_SHORT).show();
+        }
+
         Intent data = new Intent();
+        if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT)) {
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT,
+                    (CourseEntity)intent.getSerializableExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT));
+        }
         data.putExtra(AssessmentDetailsActivity.EXTRA_ASSESSMENT_OBJECT, newAssessment);
         setResult(RESULT_OK, data);
         finish();

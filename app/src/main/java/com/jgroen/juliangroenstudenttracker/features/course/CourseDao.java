@@ -30,4 +30,7 @@ public interface CourseDao {
 
     @Query("SELECT * FROM course_table ORDER BY courseID ASC")
     CourseEntity[] loadAllCourses();
+
+    @Query("SELECT * FROM course_table WHERE courseID = :courseID")
+    CourseEntity getCourseByID(int courseID);
 }

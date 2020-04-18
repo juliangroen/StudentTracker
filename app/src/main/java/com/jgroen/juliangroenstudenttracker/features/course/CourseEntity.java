@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -16,7 +17,7 @@ import static androidx.room.ForeignKey.CASCADE;
                 parentColumns = "termID",
                 childColumns = "termID",
                 onDelete = CASCADE))
-public class CourseEntity {
+public class CourseEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int courseID;
