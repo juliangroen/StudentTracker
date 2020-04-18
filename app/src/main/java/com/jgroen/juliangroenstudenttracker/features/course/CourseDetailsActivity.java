@@ -221,10 +221,13 @@ public class CourseDetailsActivity extends AppCompatActivity implements Assessme
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        Intent currentCourse = getIntent();
+                        String currentCourseTitle = currentCourse.getStringExtra(EXTRA_COURSE_TITLE);
+
                         if (which == 0) {
                             // Create Notification for Start Date
                             Intent intent = new Intent(CourseDetailsActivity.this, TrackerReceiver.class);
-                            String content = assessment.getAssessmentTitle() + "'s due date is today!";
+                            String content = assessment.getAssessmentTitle() + " from " + currentCourseTitle + " is due today!";
                             intent.putExtra(TrackerReceiver.EXTRA_NOTIFICATION_CONTENT, content);
 
                             PendingIntent sender = PendingIntent.getBroadcast(

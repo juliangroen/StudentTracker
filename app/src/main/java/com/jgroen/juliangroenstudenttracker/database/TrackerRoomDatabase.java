@@ -46,10 +46,9 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
-
         @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
             new PopulateDbAsync(INSTANCE).execute();
         }
     };
@@ -74,7 +73,7 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
             // POPULATE TERMS //
             ////////////////////
 
-            termDao.deleteAllTerms();
+            // termDao.deleteAllTerms();
 
             TermEntity term1 = new TermEntity(
                     "Term 1",
@@ -102,7 +101,7 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
 
             TermEntity[] terms = termDao.loadAllTerms();
 
-            courseDao.deleteAllCourses();
+            // courseDao.deleteAllCourses();
 
             for (TermEntity term: terms) {
 
@@ -154,7 +153,7 @@ public abstract class TrackerRoomDatabase extends RoomDatabase {
 
             CourseEntity[] courses = courseDao.loadAllCourses();
 
-            assessmentDao.deleteAllAssessments();
+            // assessmentDao.deleteAllAssessments();
 
             for (CourseEntity course: courses) {
 
