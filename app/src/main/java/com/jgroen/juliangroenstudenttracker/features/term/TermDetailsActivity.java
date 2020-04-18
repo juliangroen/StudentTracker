@@ -3,6 +3,7 @@ package com.jgroen.juliangroenstudenttracker.features.term;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -62,7 +63,9 @@ public class TermDetailsActivity extends AppCompatActivity {
         courseViewModel.getAllCourses().observe(this, new Observer<List<CourseEntity>>() {
             @Override
             public void onChanged(List<CourseEntity> courseEntities) {
-                int termID = intent.getIntExtra(TermAddEditActivity.EXTRA_TERM_ID, -1);
+                TermEntity term = (TermEntity) intent.getSerializableExtra(
+                        TermActivity.EXTRA_TERM_OBJ);
+                int termID = term.getTermID();
                 List<CourseEntity> courseList = new ArrayList<CourseEntity>();
                 for (CourseEntity course: courseEntities) {
                     if (termID == course.getTermID())
@@ -110,8 +113,12 @@ public class TermDetailsActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
 
             if (requestCode == TermActivity.EDIT_TERM_REQUEST_CODE) {
-                setData(data);
+//                setData(data);
                 Toast.makeText(this, "Term Updated!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(TermDetailsActivity.this, TermDetailsActivity.class);
+                intent.putExtras(data);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
             } else if (requestCode == CourseDetailsActivity.ADD_COURSE_REQUEST_CODE) {
                 int termID = data.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1);
@@ -144,20 +151,22 @@ public class TermDetailsActivity extends AppCompatActivity {
     }
 
     private void setData(Intent intent) {
-        String startDate = TrackerUtilities.longToDateString(intent.getLongExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, -1));
-        String endDate = TrackerUtilities.longToDateString(intent.getLongExtra(TermAddEditActivity.EXTRA_TERM_END_DATE, -1));
 
-        textTermDetailTitle.setText(intent.getStringExtra(TermAddEditActivity.EXTRA_TERM_TITLE));
+        TermEntity term = (TermEntity) intent.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ);
+
+        String startDate = TrackerUtilities.longToDateString(term.getTermStartDate().getTime());
+        String endDate = TrackerUtilities.longToDateString(term.getTermEndDate().getTime());
+
+        textTermDetailTitle.setText(term.getTermTitle());
         textTermDetailTitle.setTypeface(null, Typeface.BOLD);
         textTermDetailDates.setText(getString(R.string.detail_dates, startDate, endDate));
+
     }
 
     private void addCourse() {
         Intent previousIntent = getIntent();
-        int termId = previousIntent.getIntExtra(TermAddEditActivity.EXTRA_TERM_ID, -1);
-
         Intent intent = new Intent(TermDetailsActivity.this, CourseAddEditActivity.class);
-        intent.putExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, termId);
+        intent.putExtras(previousIntent);
         startActivityForResult(intent, CourseDetailsActivity.ADD_COURSE_REQUEST_CODE);
     }
 }

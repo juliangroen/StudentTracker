@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgroen.juliangroenstudenttracker.R;
+import com.jgroen.juliangroenstudenttracker.features.term.TermActivity;
+import com.jgroen.juliangroenstudenttracker.features.term.TermEntity;
 import com.jgroen.juliangroenstudenttracker.utils.TrackerUtilities;
 
 import java.util.Date;
@@ -50,7 +52,7 @@ public class CourseAddEditActivity extends AppCompatActivity {
         if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT)) {
             setTitle(R.string.activity_course_edit_title);
 
-            CourseEntity course = (CourseEntity)intent.getSerializableExtra(
+            CourseEntity course = (CourseEntity) intent.getSerializableExtra(
                     CourseDetailsActivity.EXTRA_COURSE_OBJECT);
 
             textCourseTitle.setText(course.getCourseTitle());
@@ -67,21 +69,6 @@ public class CourseAddEditActivity extends AppCompatActivity {
             textInstructorNumber.setText(course.getCourseInstructorNumber());
             textInstructorEmail.setText(course.getCourseInstructorEmail());
 
-//            textCourseTitle.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE));
-//            textCourseStatus.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS));
-//
-//            int[] startDateArray = TrackerUtilities.longToDateArray(
-//                    intent.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, -1));
-//
-//            int[] endDateArray = TrackerUtilities.longToDateArray(
-//                    intent.getLongExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, -1));
-//
-//            dateStartDate.updateDate(startDateArray[0], startDateArray[1], startDateArray[2]);
-//            dateEndDate.updateDate(endDateArray[0], endDateArray[1], endDateArray[2]);
-//            textCourseNote.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_NOTE));
-//            textInstructorName.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NAME));
-//            textInstructorNumber.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NUMBER));
-//            textInstructorEmail.setText(intent.getStringExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_EMAIL));
         }
 
         FloatingActionButton fab = findViewById(R.id.fabCourseSave);
@@ -92,7 +79,6 @@ public class CourseAddEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        //return super.onSupportNavigateUp();
         Intent intent = getIntent();
         setResult(RESULT_CANCELED, intent);
         finish();
@@ -130,15 +116,14 @@ public class CourseAddEditActivity extends AppCompatActivity {
             return;
         } else if (status.trim().isEmpty()) {
             Toast.makeText(this, "Please insert a status", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Intent intent = getIntent();
 
         if (intent.hasExtra(CourseDetailsActivity.EXTRA_COURSE_OBJECT)) {
 
-//            CourseEntity course = new CourseEntity(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1), title, startDate, endDate, status);
-//            course.setCourseID(intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_ID, -1));
-            CourseEntity course = (CourseEntity)intent.getSerializableExtra(
+            CourseEntity course = (CourseEntity) intent.getSerializableExtra(
                     CourseDetailsActivity.EXTRA_COURSE_OBJECT);
             course.setCourseTitle(title);
             course.setCourseStartDate(startDate);
@@ -156,20 +141,21 @@ public class CourseAddEditActivity extends AppCompatActivity {
 
         } else {
 
-        Intent data = new Intent();
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, intent.getIntExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, -1));
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE, title);
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS, status);
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, startDate.getTime());
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, endDate.getTime());
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_NOTE, note);
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NAME, name);
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NUMBER, number);
-        data.putExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_EMAIL, email);
-        setResult(RESULT_OK, data);
-        finish();
+            TermEntity term = (TermEntity) intent.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ);
+            Intent data = new Intent();
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_TERM_ID, term.getTermID());
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_TITLE, title);
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_STATUS, status);
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_START_DATE, startDate.getTime());
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_END_DATE, endDate.getTime());
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_NOTE, note);
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NAME, name);
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_NUMBER, number);
+            data.putExtra(CourseDetailsActivity.EXTRA_COURSE_INSTRUCTOR_EMAIL, email);
+            setResult(RESULT_OK, data);
+            finish();
+
+        }
 
     }
-
-}
 }

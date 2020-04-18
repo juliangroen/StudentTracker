@@ -52,13 +52,6 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        /*recyclerView.setOnLongClickListener(view -> {
-            int position = recyclerView.getChildLayoutPosition(view);
-            TermEntity currentTerm = adapter.getCurrentTerm(position);
-            termViewModel.delete(currentTerm);
-            return true;
-        });*/
-
         termViewModel.getAllTerms().observe(this, new Observer<List<TermEntity>>() {
             @Override
             public void onChanged(List<TermEntity> termEntities) {
@@ -108,6 +101,7 @@ public class TermActivity extends AppCompatActivity implements TermAdapter.Adapt
     @Override
     public void onItemClicked(TermEntity term) {
         Intent intent = new Intent(TermActivity.this, TermDetailsActivity.class);
+        intent.putExtra(TermActivity.EXTRA_TERM_OBJ, term);
         intent.putExtra(TermAddEditActivity.EXTRA_TERM_ID, term.getTermID());
         intent.putExtra(TermAddEditActivity.EXTRA_TERM_TITLE, term.getTermTitle());
         intent.putExtra(TermAddEditActivity.EXTRA_TERM_START_DATE, term.getTermStartDate().getTime());

@@ -2,6 +2,7 @@ package com.jgroen.juliangroenstudenttracker.features.term;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,12 +43,14 @@ public class TermAddEditActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        if (intent.hasExtra(EXTRA_TERM_ID)) {
+        if (intent.hasExtra(TermActivity.EXTRA_TERM_OBJ)) {
             setTitle(R.string.activity_term_edit_title);
-            textTermTitle.setText(intent.getStringExtra(EXTRA_TERM_TITLE));
+            TermEntity term = (TermEntity) intent.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ);
 
-            int[] startDateArray = TrackerUtilities.longToDateArray(intent.getLongExtra(EXTRA_TERM_START_DATE, -1));
-            int[] endDateArray = TrackerUtilities.longToDateArray(intent.getLongExtra(EXTRA_TERM_END_DATE, -1));
+            textTermTitle.setText(term.getTermTitle());
+
+            int[] startDateArray = TrackerUtilities.longToDateArray(term.getTermStartDate().getTime());
+            int[] endDateArray = TrackerUtilities.longToDateArray(term.getTermEndDate().getTime());
 
             dateStartDate.updateDate(startDateArray[0], startDateArray[1], startDateArray[2]);
             dateEndDate.updateDate(endDateArray[0], endDateArray[1], endDateArray[2]);
@@ -89,13 +92,19 @@ public class TermAddEditActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        if (intent.hasExtra(EXTRA_TERM_ID)) {
+        if (intent.hasExtra(TermActivity.EXTRA_TERM_OBJ)) {
 
-            TermEntity term = new TermEntity(title, startDate, endDate);
-            term.setTermID(intent.getIntExtra(EXTRA_TERM_ID, -1));
+            TermEntity term = (TermEntity) intent.getSerializableExtra(TermActivity.EXTRA_TERM_OBJ);
+            term.setTermTitle(title);
+            term.setTermStartDate(startDate);
+            term.setTermEndDate(endDate);
             termViewModel.update(term);
+            Intent data = new Intent();
+            data.putExtra(TermActivity.EXTRA_TERM_OBJ, term);
+            setResult(RESULT_OK, data);
+            finish();
 
-        }
+        } else {
 
         Intent data = new Intent();
         data.putExtra(EXTRA_TERM_TITLE, title);
@@ -103,5 +112,7 @@ public class TermAddEditActivity extends AppCompatActivity {
         data.putExtra(EXTRA_TERM_END_DATE, endDate.getTime());
         setResult(RESULT_OK, data);
         finish();
+
+        }
     }
 }

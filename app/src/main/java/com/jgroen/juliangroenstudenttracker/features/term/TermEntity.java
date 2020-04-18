@@ -20,23 +20,35 @@ public class TermEntity implements Serializable {
         this.termEndDate = termEndDate;
     }
 
-    public void setTermID(int termID) {
-        this.termID = termID;
-    }
-
     public int getTermID() {
         return termID;
+    }
+
+    public void setTermID(int termID) {
+        this.termID = termID;
     }
 
     public String getTermTitle() {
         return termTitle;
     }
 
+    public void setTermTitle(String termTitle) {
+        this.termTitle = termTitle;
+    }
+
     public Date getTermStartDate() {
         return termStartDate;
     }
 
+    public void setTermStartDate(Date termStartDate) {
+        this.termStartDate = termStartDate;
+    }
+
     public Date getTermEndDate() {
         return termEndDate;
+    }
+
+    public void setTermEndDate(Date termEndDate) {
+        this.termEndDate = termEndDate;
     }
 }
