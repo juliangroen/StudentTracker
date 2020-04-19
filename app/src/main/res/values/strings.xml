@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Student Tracker</string>
+    <string name="activity_main_title">Home Screen</string>
+    <string name="activity_term_title">Term List</string>
     <string name="activity_assessment_detail_title">Assessment Details</string>
     <string name="activity_assessment_add_title">Add Assessment</string>
     <string name="activity_assessment_edit_title">Edit Assessment</string>
@@ -38,6 +40,10 @@
     <string name="channel_name">Tracker Notifications</string>
     <string name="channel_description">Notification channel for the Student Tracker</string>
     <string name="desc_share_icon">share icon</string>
+    <string name="activity_term_list_title">Term List</string>
+    <string name="button_term_list">Term List</string>
+    <string name="text_main_title">Welcome to Student Tracker</string>
+    <string name="text_main_subtitle">Click on the term list button below to begin</string>
 
     <string-array name="assessment_type_array">
         <item>Performance</item>

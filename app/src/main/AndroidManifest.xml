@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jgroen.juliangroenstudenttracker"
-    >
+    package="com.jgroen.juliangroenstudenttracker">
 
     <application
         android:allowBackup="true"
@@ -10,18 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <receiver
             android:name=".utils.TrackerReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
-        <activity android:name=".features.term.TermActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+
+        <activity
+            android:name=".features.term.TermActivity"
+            android:label="@string/activity_term_list_title"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".features.assessment.AssessmentDetailsActivity"
             android:label="@string/activity_assessment_detail_title"

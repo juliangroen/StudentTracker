@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:text="@string/text_main_title"
+        android:id="@+id/textMainTitle"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:text="@string/text_main_subtitle"
+        android:id="@+id/textMainSubtitle"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:paddingBottom="@dimen/large_padding"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/textMainTitle"/>
+
+    <Button
+        android:text="@string/button_term_list"
+        android:id="@+id/buttonMainTerms"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:background="@color/cardview_dark_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginStart="@dimen/large_padding"
+        android:layout_marginEnd="@dimen/large_padding"
+        android:padding="@dimen/large_padding"
+        app:layout_constraintTop_toBottomOf="@id/textMainSubtitle"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
